@@ -1,0 +1,39 @@
+{
+    "header": {
+        "nav": {
+            "kak-kupit": {
+                "title": "Как купить"
+            },
+            "oplata": {
+                "title": "Оплата"
+            },
+            "dostavka": {
+                "title": "Доставка"
+            },
+            "kontakty": {
+                "title": "Контакты"
+            },
+            "o-nas": {
+                "title": "О нас"
+            },
+            "signin": {
+                "title": "Войти"
+            },
+            "signout": {
+                "title": "Выйти"
+            },
+            "signup": {
+                "title": "Регистрация"
+            },
+            "cabinet": {
+                "title": "Кабинет"
+            }
+        }
+    },
+    "main": {},
+    "footer": {
+        "copyright": {
+            "title": "&copy; 2020 Все права защищены. Интернет-магазин MedTrading.org"
+        }
+    }
+}

@@ -1,0 +1,88 @@
+.carousel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #002097;
+    // background-image: url('../../assets/images/virus.png');
+    background-size: contain;
+    color: #fff;
+
+    padding: 1em;
+    position: relative;
+
+    overflow: hidden;
+
+    &:before {
+        content: '';
+
+        background: url('../../assets/images/virus.png') no-repeat center left;
+
+        display: inline-block;
+
+        width: 50%;
+        height: 100%;
+
+        position: absolute;
+        left: 0;
+        z-index: 0;
+
+        // Breakpoints
+        @include breakpoint(phone) {
+            display: none;
+        }
+    }
+
+    &:after {
+        content: '';
+
+        background: url('../../assets/images/virus.png') no-repeat center right;
+
+        display: inline-block;
+
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 0;
+    }
+
+    h1 {
+        font-size: 4em;
+        z-index: 1;
+
+        // Breakpoints
+        @include breakpoint(phone) {
+            @include font(29px, 48px);
+        }
+    }
+
+    p {
+        font-size: 2em;
+        margin: 0.6em;
+        z-index: 1;
+
+        // Breakpoints
+        @include breakpoint(phone) {
+            @include font(18px, 48px);
+        }
+    }
+
+    img {
+        display: block;
+        margin: 1em 1em 3em;
+        z-index: 1;
+
+        width: 100%;
+
+        max-width: 360px;
+
+        // Breakpoints
+        @include breakpoint(phone) {
+            max-width: 260px;
+        }
+    }
+}

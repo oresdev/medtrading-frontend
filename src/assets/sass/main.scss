@@ -1,0 +1,16 @@
+@charset 'UTF-8';
+
+// 1. Configuration and helpers
+@import 'abstracts/mixins';
+// 3. Base stuff
+@import 'base/default', 'base/fonts', 'base/typography';
+
+// 1. Vendors
+@import 'vendors/normalize';
+
+// 2. Components
+@import 'components/header', 'components/search-bar', 'components/carousel',
+    'components/modal', 'components/footer';
+
+// 3. Sections
+@import 'sections/articles', 'sections/about', 'sections/cpanel';

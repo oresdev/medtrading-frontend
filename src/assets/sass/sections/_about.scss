@@ -1,0 +1,33 @@
+.about {
+    background-color: #efefef;
+
+    margin: 2em auto;
+    padding: 2em 1em;
+
+    text-align: center;
+
+    strong {
+        @include font(23px, 39px, 500);
+
+        max-width: 1280px;
+
+        // Breakpoints
+        @include breakpoint(phone) {
+            @include font(18px, 28px);
+        }
+    }
+
+    b {
+        display: block;
+
+        @include font(18px, 28px, 500);
+
+        margin: 1em auto 0;
+        max-width: 1280px;
+
+        // Breakpoints
+        @include breakpoint(phone) {
+            @include font(14px, 26px);
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "views": {
+        "logout": {
+            "title": "title"
+        },
+        "faq": {
+            "title": "title"
+        },
+        "payment": {
+            "title": "title"
+        },
+        "delivery": {
+            "title": "title"
+        },
+        "contacts": {
+            "title": "title"
+        },
+        "about": {
+            "title": "title"
+        },
+        "404": {
+            "title": "404",
+            "subtitle": "subtitle"
+        }
+    },
+    "copyright": "copyright",
+    "errors": {}
+}

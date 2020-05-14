@@ -1,0 +1,52 @@
+.articles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: minmax(120px, auto);
+    grid-gap: 20px;
+
+    margin: 4em auto;
+    max-width: 1280px;
+
+    article {
+        position: relative;
+
+        text-align: center;
+
+        ul {
+            padding: 0;
+        }
+
+        img {
+            max-width: 320px;
+            width: 100%;
+
+            // Breakpoints
+            @include breakpoint(phone) {
+                max-width: 180px;
+            }
+        }
+
+        button,
+        .button {
+            background-color: #002097;
+            color: #fff;
+            margin: 1em 0;
+            padding: 0.6em 3em;
+
+            &:hover {
+                background-color: #fff;
+                color: #002097;
+            }
+        }
+    }
+
+    // Breakpoints
+    @include breakpoint(desktop) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    // Breakpoints
+    @include breakpoint(tablet) {
+        grid-template-columns: 1fr;
+    }
+}
