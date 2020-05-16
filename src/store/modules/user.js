@@ -14,7 +14,7 @@ const actions = {
     async getAll({ commit }) {
         axios.init()
         await axios
-            .get('https://medtrading.org/user/')
+            .get('https://medtrading.org/api/user/')
             .then(response => {
                 commit('responseData', response.data.data)
             })
@@ -26,7 +26,7 @@ const actions = {
     async getCallto({ commit }) {
         axios.init()
         await axios
-            .get('https://medtrading.org/callto/')
+            .get('https://medtrading.org/api/callto/')
             .then(response => {
                 commit('responseData', response.data.data)
             })
@@ -37,7 +37,7 @@ const actions = {
 
     async callme({ commit }, data) {
         await axios
-            .post('https://medtrading.org/callto/', data)
+            .post('https://medtrading.org/api/callto/', data)
             .then(response => {
                 commit('responseStatus', response.data.status)
             })
