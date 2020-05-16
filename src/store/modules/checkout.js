@@ -15,7 +15,7 @@ const actions = {
     async getAll({ commit }) {
         axios.init()
         await axios
-            .get('http://localhost:5000/checkout/')
+            .get('https://medtrading.org/api/checkout/')
             .then(response => {
                 commit('responseData', response.data.data)
             })
@@ -27,7 +27,7 @@ const actions = {
         const email = storage.get('session_data').user.email
         axios.init()
         await axios
-            .get('http://localhost:5000/checkout/' + email)
+            .get('https://medtrading.org/api/checkout/' + email)
             .then(response => {
                 commit('responseData', response.data)
             })
@@ -45,7 +45,7 @@ const actions = {
             description: 'positions',
         }
         await axios
-            .post('http://localhost:5000/checkout/', checkout)
+            .post('https://medtrading.org/api/checkout/', checkout)
             .then(response => {
                 commit('responseStatus', response.data.status)
                 localStorage.removeItem('cart')
