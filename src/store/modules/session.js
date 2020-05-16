@@ -17,7 +17,7 @@ const getters = {
 const actions = {
     async signin({ commit }, data) {
         await axios
-            .post('https://medtrading.org/api/auth/login', data)
+            .post('https://medtrading.org/auth/login', data)
             .then(response => {
                 commit('responseData', response.data)
                 commit('responseStatus', response.data.status)
@@ -31,7 +31,7 @@ const actions = {
 
     async signup({ commit }, data) {
         await axios
-            .post('https://medtrading.org/api/user/', data)
+            .post('https://medtrading.org/user/', data)
             .then(response => {
                 commit('responseStatus', response.data.status)
             })
@@ -49,7 +49,7 @@ const actions = {
         axios.init()
 
         await axios
-            .post('https://medtrading.org/api/auth/logout')
+            .post('https://medtrading.org/auth/logout')
             .then(response => {
                 commit('responseStatus', response.data.status)
                 // Remove the token and remove axios header from /common/api
