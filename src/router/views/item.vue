@@ -1,5 +1,5 @@
 <template>
-    <section class="wrapper">
+    <section class="wrapper" v-if="get_product[0]">
         <h1 v-text="get_product[0].name"></h1>
         <p v-text="get_product[0].description"></p>
 
@@ -7,7 +7,7 @@
             <!-- Articles -->
             <article>
                 <header>
-                    <img src="@/assets/images/tests.jpg" alt="" />
+                    <img :src="get_product[0].image" alt="" />
                 </header>
                 <ul>
                     <li>
@@ -21,17 +21,22 @@
                         }}
                     </li>
                     <li>
-                        <span v-text="`Колличество: `" />{{
-                            get_product[0].quantity
-                        }}
-                    </li>
-                    <li>
                         <span v-text="`Номер товара: `" />{{
                             get_product[0].batch_id
                         }}
                     </li>
                 </ul>
-                <button v-text="`Добавить в корзину`" />
+                <button
+                    v-text="`Добавить в корзину`"
+                    @click="
+                        addToCart({
+                            name: get_product[0].name,
+                            price: get_product[0].price,
+                            quantity: 1,
+                            batch_id: get_product[0].batch_id,
+                        })
+                    "
+                />
             </article>
         </div>
     </section>
@@ -47,9 +52,15 @@ export default {
     computed: {
         ...mapGetters({
             product: 'Product/responseData',
+            cart: 'Product/stock',
         }),
         get_product: self =>
             self.product.filter(p => p.public_name === self.$route.params.item),
+    },
+    methods: {
+        addToCart(product) {
+            this.$store.dispatch('Product/addToCart', product)
+        },
     },
     async mounted() {
         await this.$store.dispatch('Product/getAll')

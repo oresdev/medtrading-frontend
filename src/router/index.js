@@ -15,7 +15,9 @@ import categories from './views/categories.vue'
 import categories_create from './views/categories-create.vue'
 
 import users from './views/users.vue'
+import callme from './views/callme.vue'
 import checkout from './views/checkout.vue'
+import checkoutUser from './views/checkout-user.vue'
 
 Vue.use(VueRouter)
 
@@ -43,6 +45,17 @@ const router = new VueRouter({
             name: 'cabinet',
             component: cabinet,
             meta: { requiresAuth: true, residentAuth: true, adminAuth: false },
+            children: [
+                {
+                    path: '/cabinet/checkout',
+                    component: checkoutUser,
+                    meta: {
+                        requiresAuth: true,
+                        residentAuth: true,
+                        adminAuth: false,
+                    },
+                },
+            ],
         },
         {
             path: '/cpanel',
@@ -98,6 +111,15 @@ const router = new VueRouter({
                 {
                     path: '/cpanel/checkout',
                     component: checkout,
+                    meta: {
+                        requiresAuth: true,
+                        adminAuth: true,
+                        residentAuth: false,
+                    },
+                },
+                {
+                    path: '/cpanel/callme',
+                    component: callme,
                     meta: {
                         requiresAuth: true,
                         adminAuth: true,

@@ -40,7 +40,10 @@
                         />
                     </li>
                     <li>
-                        <router-link to="/" v-text="`Список заявок`" />
+                        <router-link
+                            to="/cpanel/callme"
+                            v-text="`Список заявок`"
+                        />
                     </li>
                 </ul>
             </aside>

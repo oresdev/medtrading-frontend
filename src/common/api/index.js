@@ -22,7 +22,7 @@ export default {
     init() {
         const headers = axios.defaults.headers.common
 
-        headers['Content-Type'] = 'application/json'
+        headers['Content-Type'] = 'application/json; charset=utf-8'
 
         headers['Authorization'] = `${storage.get('session_data').user.token}`
     },

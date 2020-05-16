@@ -1,10 +1,11 @@
 <template>
     <div>
         <h1>Список товаров</h1>
+
         <table>
             <thead>
                 <tr>
-                    <th>Адрес эл.почты</th>
+                    <th>Дата заказа</th>
                     <th>Список</th>
                     <th>Сумма</th>
                     <th>Статус</th>
@@ -14,7 +15,7 @@
             <tbody>
                 <tr v-for="item in checkout" :key="item.id">
                     <td>
-                        {{ item.email }}
+                        {{ item.created_on }}
                     </td>
                     <td style="max-width: 500px;">
                         <ul
@@ -48,9 +49,7 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
     data() {
-        return {
-            list: '',
-        }
+        return {}
     },
     methods: {
         pars(positions) {
@@ -63,7 +62,7 @@ export default {
         }),
     },
     async mounted() {
-        await this.$store.dispatch('Checkout/getAll')
+        await this.$store.dispatch('Checkout/getUserAll')
     },
 }
 </script>

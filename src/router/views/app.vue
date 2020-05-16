@@ -5,6 +5,7 @@
                 v-on:modal="modal = true"
                 v-on:signin_modal="signin_modal = true"
                 v-on:signup_modal="signup_modal = true"
+                v-on:cart_modal="cart_modal = true"
             />
         </header>
 
@@ -35,11 +36,34 @@
             <h3><strong>Обратный звонок</strong></h3>
             <p>Заполните поля ниже и мы свяжемся с вами в ближайшее время.</p>
 
-            <form>
-                <input type="text" placeholder="Ваше имя" />
-                <input type="text" placeholder="Номер телефона" />
+            <form submit.prevent>
+                <input
+                    type="text"
+                    v-model="caller.username"
+                    :placeholder="`Ваше имя`"
+                />
+
+                <!--  -->
+                <input
+                    type="text"
+                    v-model="caller.phone"
+                    :placeholder="`Номер телефона`"
+                />
+
+                <p
+                    v-if="callStatus"
+                    :class="[
+                        callStatus == 'fail' ? 'error' : 'success',
+                        'message',
+                    ]"
+                    v-text="callStatus"
+                />
             </form>
-            <button>Перезвонить</button>
+            <button
+                type="submit"
+                v-on:click="sendCall"
+                v-text="`Перезвонить`"
+            />
         </modal>
 
         <!-- use the modal component, pass in the prop -->
@@ -111,6 +135,47 @@
                 v-text="`Подтвердить`"
             />
         </modal>
+
+        <!-- use the modal component, pass in the prop -->
+        <modal v-if="cart_modal && cart != 0" v-on:close="cart_modal = false">
+            <h3 v-text="`Корзина`" />
+            <table>
+                <tbody>
+                    <tr v-for="item in cart" :key="item.data">
+                        <td>
+                            {{ item.data.name }}
+                        </td>
+                        <td>{{ item.data.price }}</td>
+                        <td>{{ item.data.quantity }} шт</td>
+                        <td>
+                            <ul class="rounded">
+                                <li @click="addToCart(item.data)">+</li>
+                                <li @click="removeFromCart(item.data)">-</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td data-label="Итого: ">{{ total }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p
+                v-if="checkStatus"
+                :class="[
+                    checkStatus == 'fail' ? 'error' : 'success',
+                    'message',
+                ]"
+                v-text="checkStatus"
+            />
+            <button v-if="session" v-on:click="checkoutCreate">Оформить</button>
+            <button
+                v-else
+                v-on:click=";(cart_modal = false), (signin_modal = true)"
+            >
+                Войти
+            </button>
+        </modal>
     </body>
 </template>
 
@@ -120,13 +185,19 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data() {
         return {
+            cs: JSON.parse(localStorage.getItem('cart')),
             modal: false,
             signin_modal: false,
             signup_modal: false,
+            cart_modal: false,
             form: {
                 email: '',
                 username: '',
                 password: '',
+            },
+            caller: {
+                username: '',
+                phone: '',
             },
         }
     },
@@ -135,13 +206,26 @@ export default {
             return [...name].indexOf(this.$route.name) > -1
         },
 
-        ...mapActions('Session', ['signin', 'signup']),
+        ...mapActions({
+            signin: 'Session/signin',
+            signup: 'Session/signup',
+            create: 'Checkout/create',
+            callme: 'User/callme',
+        }),
 
         async sendRequest() {
             await this.signin(this.form)
             this.status == 'success'
                 ? setTimeout(() => {
                       this.signin_modal = false
+                  }, 3000)
+                : ''
+        },
+        async sendCall() {
+            await this.callme(this.caller)
+            this.callStatus == 'success'
+                ? setTimeout(() => {
+                      this.modal = false
                   }, 3000)
                 : ''
         },
@@ -153,11 +237,49 @@ export default {
                   }, 3000)
                 : ''
         },
+        async checkoutCreate() {
+            await this.create({
+                email: this.data.user.email,
+                total: this.total,
+            })
+            this.checkStatus == 'success'
+                ? setTimeout(() => {
+                      this.cart_modal = false
+                      this.$store.commit('Product/responseCart', [])
+                  }, 3000)
+                : ''
+        },
+        addToCart(product) {
+            this.$store.dispatch('Product/addToCart', product)
+        },
+
+        removeFromCart(index) {
+            this.$store.dispatch('Product/removeFromCart', index)
+        },
     },
 
     computed: {
-        ...mapGetters('Session', ['responseError', 'responseStatus']),
+        ...mapGetters({
+            data: 'Session/responseData',
+            responseError: 'Session/responseError',
+            responseStatus: 'Session/responseStatus',
+            cart: 'Product/stock',
+            checkoutStatus: 'Checkout/responseStatus',
+            total: 'Product/totalPrice',
+            callStatus: 'User/responseStatus',
+        }),
+        session: self => (self.data ? self.data.user : false),
         status: self => (self.responseStatus ? self.responseStatus : false),
+        checkStatus: self =>
+            self.checkoutStatus ? self.checkoutStatus : false,
+        /* snip */
+        // cart() {
+        //     return this.inCart.map(cartItem => {
+        //         return this.forSale.find(forSaleItem => {
+        //             return cartItem === forSaleItem.batch_id
+        //         })
+        //     })
+        // },
     },
 }
 </script>
