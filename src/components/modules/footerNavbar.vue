@@ -3,18 +3,32 @@
         <ul>
             <strong>О компании</strong>
             <hr />
-            <li><router-link to="/" v-text="`О компании`" /></li>
-            <li><router-link to="/" v-text="`Обратная связь`" /></li>
-            <li><router-link to="/" v-text="`Контакты`" /></li>
+            <li><router-link to="/o-kompanii" v-text="`О компании`" /></li>
+            <li>
+                <router-link
+                    to="/"
+                    v-text="`Обратная связь`"
+                    v-on:click="$emit('modal')"
+                />
+            </li>
+            <li><router-link to="/kontakty" v-text="`Контакты`" /></li>
         </ul>
 
         <ul>
             <strong>Для покупателей</strong>
             <hr />
             <li>
-                <router-link to="/" v-text="`Условия продажи товаров для ЮЛ`" />
+                <router-link
+                    to="/vozvrat-i-obmen"
+                    v-text="`Условия продажи товаров для ЮЛ`"
+                />
             </li>
-            <li><router-link to="/" v-text="`Политика обработки ПД`" /></li>
+            <li>
+                <router-link
+                    to="/garantijnye-obyazatelstva"
+                    v-text="`Политика обработки ПД`"
+                />
+            </li>
         </ul>
 
         <ul>

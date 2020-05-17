@@ -2,6 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import home from './views/home.vue'
+import o_kompanii from './views/o-kompanii.vue'
+import kak_kupit from './views/kak-kupit.vue'
+import oplata from './views/oplata.vue'
+import dostavka from './views/dostavka.vue'
+import kontakty from './views/kontakty.vue'
+import vozvrat from './views/vozvrat-i-obmen.vue'
+import obyazatelstva from './views/garantijnye-obyazatelstva.vue'
+
 import category from './views/category.vue'
 import item from './views/item.vue'
 
@@ -29,6 +37,41 @@ const router = new VueRouter({
             path: '/',
             name: 'home',
             component: home,
+        },
+        {
+            path: '/o-kompanii',
+            name: 'o_kompanii',
+            component: o_kompanii,
+        },
+        {
+            path: '/kak-kupit',
+            name: 'kak_kupit',
+            component: kak_kupit,
+        },
+        {
+            path: '/oplata',
+            name: 'oplata',
+            component: oplata,
+        },
+        {
+            path: '/dostavka',
+            name: 'dostavka',
+            component: dostavka,
+        },
+        {
+            path: '/kontakty',
+            name: 'kontakty',
+            component: kontakty,
+        },
+        {
+            path: '/vozvrat-i-obmen',
+            name: 'vozvrat',
+            component: vozvrat,
+        },
+        {
+            path: '/garantijnye-obyazatelstva',
+            name: 'obyazatelstva',
+            component: obyazatelstva,
         },
         {
             path: '/category/:slug',

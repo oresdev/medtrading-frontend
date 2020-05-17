@@ -30,7 +30,7 @@
             </li>
             <li>
                 <router-link
-                    to="/o-nas"
+                    to="/o-kompanii"
                     v-text="$t('header.nav.o-nas.title')"
                 />
             </li>
