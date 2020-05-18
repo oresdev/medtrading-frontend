@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         getImgUrl(pic) {
-            return '/dist/img/' + pic
+            return '/img/' + pic
             // return require('@/assets/images/' + pic)
         },
     },
