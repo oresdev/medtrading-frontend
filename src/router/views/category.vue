@@ -7,7 +7,7 @@
             <!-- Articles -->
             <article v-for="item in get_product_by_category" :key="item.id">
                 <header>
-                    <img :src="item.image" alt="" />
+                    <img :src="getImgUrl(item.image)" alt="" />
                 </header>
                 <router-link
                     class="button"
@@ -41,6 +41,12 @@ export default {
             self.product.filter(
                 p => p.category_id === self.get_category[0].public_id
             ),
+    },
+    methods: {
+        getImgUrl(pic) {
+            return '/img/product/' + pic
+            // return require('@/assets/images/product/' + pic)
+        },
     },
     async mounted() {
         await this.$store.dispatch('Product/getAll')

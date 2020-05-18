@@ -34,6 +34,19 @@ const actions = {
                 commit('responseStatus', error.response.data.status)
             })
     },
+
+    async remove({ commit }, data) {
+        axios.init()
+
+        await axios
+            .post('category/remove/', data)
+            .then(response => {
+                commit('responseStatus', response.data.status)
+            })
+            .catch(error => {
+                commit('responseStatus', error.response.data.status)
+            })
+    },
 }
 
 const mutations = {

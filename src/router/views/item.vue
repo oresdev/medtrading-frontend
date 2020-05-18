@@ -7,7 +7,7 @@
             <!-- Articles -->
             <article>
                 <header>
-                    <img :src="get_product[0].image" alt="" />
+                    <img :src="getImgUrl(get_product[0].image)" alt="" />
                 </header>
                 <ul>
                     <li>
@@ -58,6 +58,10 @@ export default {
             self.product.filter(p => p.public_name === self.$route.params.item),
     },
     methods: {
+        getImgUrl(pic) {
+            return '/img/product/' + pic
+            // return require('@/assets/images/product/' + pic)
+        },
         addToCart(product) {
             this.$store.dispatch('Product/addToCart', product)
         },

@@ -50,6 +50,19 @@ const actions = {
             })
     },
 
+    async remove({ commit }, data) {
+        axios.init()
+
+        await axios
+            .post('product/remove/', data)
+            .then(response => {
+                commit('responseStatus', response.data.status)
+            })
+            .catch(error => {
+                commit('responseStatus', error.response.data.status)
+            })
+    },
+
     addToCart(context, product) {
         context.commit('ADD_TO_CART', product)
     },

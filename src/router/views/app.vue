@@ -39,7 +39,7 @@
             <form submit.prevent>
                 <input
                     type="text"
-                    v-model="caller.username"
+                    v-model="caller.name"
                     :placeholder="`Ваше имя`"
                 />
 

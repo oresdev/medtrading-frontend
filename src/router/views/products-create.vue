@@ -32,6 +32,28 @@
                 v-model="form.category_id"
                 :placeholder="`Категория`"
             />
+            <input
+                type="text"
+                v-model="form.manufacturer"
+                :placeholder="`Производитель`"
+            />
+            <input type="text" v-model="form.country" :placeholder="`Страна`" />
+            <input
+                type="text"
+                v-model="form.minimal_order"
+                :placeholder="`Минимальный заказ`"
+            />
+            <input
+                type="text"
+                v-model="form.weight"
+                :placeholder="`Вес партии`"
+            />
+            <textarea
+                name="body"
+                v-model="form.body"
+                cols="30"
+                rows="10"
+            ></textarea>
             <p
                 v-if="status"
                 :class="[status == 'fail' ? 'error' : 'success', 'message']"
@@ -60,13 +82,19 @@ export default {
         return {
             remoteUrl: '',
             form: {
-                image: '',
                 name: '',
-                description: '',
+                public_name: '',
+                description: 'Описание товара',
+                body: 'Дополнительная информация о товаре',
                 price: '',
                 quantity: '',
                 batch_id: '',
                 category_id: '',
+                manufacturer: '',
+                country: 'Китай',
+                minimal_order: '',
+                weight: '',
+                image: '',
             },
         }
     },
