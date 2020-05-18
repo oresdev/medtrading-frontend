@@ -1,7 +1,7 @@
 <template>
     <section class="carousel">
         <img src="@/assets/images/man.png" alt="" />
-        <h1>#STAYATHOME</h1>
+        <h1>#STAYHOME</h1>
         <p>Выбирай дом, а не болезнь</p>
     </section>
 </template>

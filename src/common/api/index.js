@@ -1,7 +1,6 @@
 import storage from '../storage'
 
 import axios from 'axios'
-
 /**
  * Manage your api.
  *
@@ -17,6 +16,8 @@ import axios from 'axios'
  *    - username
  *    - password
  **/
+
+axios.defaults.baseURL = 'https://medtrading.org/api/'
 
 export default {
     init() {

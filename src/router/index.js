@@ -187,7 +187,7 @@ router.beforeEach((to, from, next) => {
 
             if (
                 authUser.user.verification_token ===
-                '069b93a5-8b0b-4331-be44-32e07dfb2324'
+                '0987c4b6-bcf8-42db-8d9d-25b23df96a39'
             ) {
                 next()
             } else {
@@ -201,7 +201,7 @@ router.beforeEach((to, from, next) => {
 
             if (
                 authUser.user.verification_token !==
-                '069b93a5-8b0b-4331-be44-32e07dfb2324'
+                '0987c4b6-bcf8-42db-8d9d-25b23df96a39'
             ) {
                 next()
             } else {

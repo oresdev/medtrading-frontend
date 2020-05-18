@@ -13,7 +13,7 @@ const getters = {
 const actions = {
     async getAll({ commit }) {
         await axios
-            .get('https://medtrading.org/api/category/')
+            .get('category/')
             .then(response => {
                 commit('responseData', response.data.data)
             })
@@ -26,7 +26,7 @@ const actions = {
         axios.init()
 
         await axios
-            .post('https://medtrading.org/api/category/', data)
+            .post('category/', data)
             .then(response => {
                 commit('responseStatus', response.data.status)
             })

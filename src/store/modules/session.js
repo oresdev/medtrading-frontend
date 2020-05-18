@@ -17,7 +17,7 @@ const getters = {
 const actions = {
     async signin({ commit }, data) {
         await axios
-            .post('https://medtrading.org/api/auth/login', data)
+            .post('auth/login', data)
             .then(response => {
                 commit('responseData', response.data)
                 commit('responseStatus', response.data.status)
@@ -31,7 +31,7 @@ const actions = {
 
     async signup({ commit }, data) {
         await axios
-            .post('https://medtrading.org/api/user/', data)
+            .post('user/', data)
             .then(response => {
                 commit('responseStatus', response.data.status)
             })
@@ -48,17 +48,15 @@ const actions = {
     async signout({ commit }) {
         axios.init()
 
-        await axios
-            .post('https://medtrading.org/api/auth/logout')
-            .then(response => {
-                commit('responseStatus', response.data.status)
-                // Remove the token and remove axios header from /common/api
-                state.data = null
+        await axios.post('auth/logout').then(response => {
+            commit('responseStatus', response.data.status)
+            // Remove the token and remove axios header from /common/api
+            state.data = null
 
-                axios.close()
+            axios.close()
 
-                router.push('/')
-            })
+            router.push('/')
+        })
     },
 }
 

@@ -112,7 +112,7 @@
 
                 <input
                     type="text"
-                    v-model="form.username"
+                    v-model="form.name"
                     :placeholder="`Имя пользователя`"
                 />
 
@@ -192,11 +192,11 @@ export default {
             cart_modal: false,
             form: {
                 email: '',
-                username: '',
+                name: '',
                 password: '',
             },
             caller: {
-                username: '',
+                name: '',
                 phone: '',
             },
         }

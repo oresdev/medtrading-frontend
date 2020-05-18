@@ -6,7 +6,7 @@
             <!-- Articles -->
             <article v-for="item in category" :key="item.id">
                 <header>
-                    <img :src="item.image" alt="" />
+                    <img :src="getImgUrl(item.image)" alt="" />
                 </header>
                 <router-link
                     class="button"
@@ -26,6 +26,12 @@ export default {
         ...mapGetters({
             category: 'Category/responseData',
         }),
+    },
+    methods: {
+        getImgUrl(pic) {
+            return require('@/assets/images/' + pic)
+            // return require('@/assets/images/' + pic)
+        },
     },
 }
 </script>
