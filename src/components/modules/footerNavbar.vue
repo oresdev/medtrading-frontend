@@ -35,7 +35,7 @@
             <strong>Адрес и Контакты</strong>
             <hr />
             <li>STO EXPORTS & LOGISTIC COMPANY</li>
-            <li>+9999999999 (WeChat)</li>
+            <li>+79258603573 (WeChat)</li>
             <li>
                 Email:
                 <a href="mail-to:info@medtrading.org">info@medtrading.org</a>
@@ -83,7 +83,7 @@
                 </svg>
             </li>
             <li class="phone">
-                <a href="tel:+79991234567">8 (999) 123-45-67</a>
+                <a href="tel:+79258603573">8 (925) 860-35-73</a>
             </li>
             <li>
                 <button

@@ -112,7 +112,7 @@
             <searchbar />
 
             <li class="phone">
-                <a href="tel:+79991234567">8 (999) 123-45-67</a>
+                <a href="tel:+79258603573">8 (925) 860-35-73</a>
             </li>
             <li>
                 <button
