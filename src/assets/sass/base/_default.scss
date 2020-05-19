@@ -49,3 +49,17 @@ ul {
 button:disabled {
     display: none;
 }
+
+.images {
+    display: flex;
+    flex-wrap: wrap;
+
+    figure {
+        flex: 1;
+
+        img {
+            width: 100%;
+            min-width: 280px;
+        }
+    }
+}

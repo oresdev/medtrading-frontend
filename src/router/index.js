@@ -9,6 +9,7 @@ import dostavka from './views/dostavka.vue'
 import kontakty from './views/kontakty.vue'
 import vozvrat from './views/vozvrat-i-obmen.vue'
 import obyazatelstva from './views/garantijnye-obyazatelstva.vue'
+import dokumenty from './views/dokumenty-i-sertifikaty.vue'
 
 import category from './views/category.vue'
 import item from './views/item.vue'
@@ -73,6 +74,11 @@ const router = new VueRouter({
             path: '/garantijnye-obyazatelstva',
             name: 'obyazatelstva',
             component: obyazatelstva,
+        },
+        {
+            path: '/dokumenty-i-sertifikaty',
+            name: 'dokumenty',
+            component: dokumenty,
         },
         {
             path: '/category/:slug',
