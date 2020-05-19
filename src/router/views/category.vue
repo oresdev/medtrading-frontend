@@ -1,5 +1,5 @@
 <template>
-    <section class="wrapper">
+    <section class="wrapper" v-if="get_category[0]">
         <h1 v-text="get_category[0].name" />
         <p v-text="get_category[0].description" />
 
@@ -45,6 +45,7 @@ export default {
     methods: {
         getImgUrl(pic) {
             return '/img/product/' + pic
+            // return 'https://medtrading.org/img/product/' + pic
             // return require('@/assets/images/product/' + pic)
         },
     },

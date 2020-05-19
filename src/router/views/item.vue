@@ -60,6 +60,7 @@ export default {
     methods: {
         getImgUrl(pic) {
             return '/img/product/' + pic
+            // return 'https://medtrading.org/img/product/' + pic
             // return require('@/assets/images/product/' + pic)
         },
         addToCart(product) {

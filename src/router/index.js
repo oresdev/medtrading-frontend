@@ -26,6 +26,7 @@ import users from './views/users.vue'
 import callme from './views/callme.vue'
 import checkout from './views/checkout.vue'
 import checkoutUser from './views/checkout-user.vue'
+import _404 from './views/_404.vue'
 
 Vue.use(VueRouter)
 
@@ -170,6 +171,11 @@ const router = new VueRouter({
                     },
                 },
             ],
+        },
+        {
+            path: '*',
+            name: '404',
+            component: _404,
         },
     ],
 })

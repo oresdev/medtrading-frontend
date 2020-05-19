@@ -65,6 +65,7 @@ const mutations = {
         storage.set('session_data', {
             user: {
                 token: data.Authorization,
+                name: data.data.name,
                 email: data.data.email,
                 verification_token: data.data.verification_token,
                 registered_on: data.data.registered_on,

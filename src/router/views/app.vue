@@ -141,7 +141,7 @@
             <h3 v-text="`Корзина`" />
             <table>
                 <tbody>
-                    <tr v-for="item in cart" :key="item.data">
+                    <tr v-for="item in cart" :key="item.name">
                         <td>
                             {{ item.data.name }}
                         </td>
@@ -159,7 +159,15 @@
                     </tr>
                 </tbody>
             </table>
-
+            <div class="phone-field" v-if="session">
+                <label for="phone">Контактная информация:</label>
+                <input
+                    type="text"
+                    name="phone"
+                    v-model="caller.phone"
+                    placeholder="+7 (___)___-__-__"
+                />
+            </div>
             <p
                 v-if="checkStatus"
                 :class="[
@@ -168,7 +176,13 @@
                 ]"
                 v-text="checkStatus"
             />
-            <button v-if="session" v-on:click="checkoutCreate">Оформить</button>
+            <button
+                v-if="session"
+                v-on:click="checkoutCreate"
+                :disabled="caller.phone == ''"
+            >
+                Оформить
+            </button>
             <button
                 v-else
                 v-on:click=";(cart_modal = false), (signin_modal = true)"
@@ -240,6 +254,8 @@ export default {
         async checkoutCreate() {
             await this.create({
                 email: this.data.user.email,
+                name: this.data.user.name,
+                phone: this.caller.phone,
                 total: this.total,
             })
             this.checkStatus == 'success'

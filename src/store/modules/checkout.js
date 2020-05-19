@@ -39,10 +39,11 @@ const actions = {
     async create({ commit }, data) {
         axios.init()
         const checkout = {
+            name: data.name,
             email: data.email,
             positions: JSON.parse(localStorage.getItem('cart')),
             total: data.total,
-            description: 'positions',
+            description: data.phone,
         }
         await axios
             .post('checkout/', checkout)

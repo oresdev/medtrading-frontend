@@ -30,6 +30,7 @@ export default {
     methods: {
         getImgUrl(pic) {
             return '/img/category/' + pic
+            // return 'https://medtrading.org/img/category/' + pic
             // return require('@/assets/images/category/' + pic)
         },
     },

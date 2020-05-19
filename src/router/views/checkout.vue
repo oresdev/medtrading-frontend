@@ -4,15 +4,20 @@
         <table>
             <thead>
                 <tr>
+                    <th>Имя</th>
                     <th>Адрес эл.почты</th>
                     <th>Список</th>
                     <th>Сумма</th>
                     <th>Статус</th>
                     <th>Номер заказа</th>
+                    <th>Номер телефона</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="item in checkout" :key="item.id">
+                    <td>
+                        {{ item.name }}
+                    </td>
                     <td>
                         {{ item.email }}
                     </td>
@@ -36,6 +41,9 @@
                     </td>
                     <td>
                         {{ item.batch_id }}
+                    </td>
+                    <td>
+                        {{ item.description }}
                     </td>
                 </tr>
             </tbody>

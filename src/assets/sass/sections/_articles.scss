@@ -30,7 +30,8 @@
         .button {
             background-color: #002097;
             color: #fff;
-            margin: 1em 0;
+            display: inline-block;
+            margin: 2em 0;
             padding: 0.6em 3em;
 
             &:hover {
