@@ -199,7 +199,7 @@ router.beforeEach((to, from, next) => {
 
             if (
                 authUser.user.verification_token ===
-                '0987c4b6-bcf8-42db-8d9d-25b23df96a39'
+                "b'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTAxMDIyNjAsImlhdCI6MTU5MDAxNTg1NSwic3ViIjoib3Jlc2hraW4uZGV2QG91dGxvb2suY29tIn0.YA4KQ9Qr9o7NmRmEpr95qLNeeCiVlv5U_iub0RP-G6w'"
             ) {
                 next()
             } else {
@@ -213,7 +213,7 @@ router.beforeEach((to, from, next) => {
 
             if (
                 authUser.user.verification_token !==
-                '0987c4b6-bcf8-42db-8d9d-25b23df96a39'
+                "b'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTAxMDIyNjAsImlhdCI6MTU5MDAxNTg1NSwic3ViIjoib3Jlc2hraW4uZGV2QG91dGxvb2suY29tIn0.YA4KQ9Qr9o7NmRmEpr95qLNeeCiVlv5U_iub0RP-G6w'"
             ) {
                 next()
             } else {

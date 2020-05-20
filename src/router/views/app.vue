@@ -93,7 +93,12 @@
                     v-text="status"
                 />
             </form>
-            <button type="submit" v-on:click="sendRequest" v-text="`Войти`" />
+            <button
+                class="button button__filled"
+                type="submit"
+                v-on:click="sendRequest"
+                v-text="`Войти`"
+            />
         </modal>
 
         <!-- use the modal component, pass in the prop -->
@@ -126,6 +131,7 @@
                 />
             </form>
             <button
+                class="button button__filled"
                 type="submit"
                 v-on:click="signupUser"
                 v-text="`Подтвердить`"
