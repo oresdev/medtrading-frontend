@@ -9,36 +9,61 @@
                 <header>
                     <img :src="getImgUrl(get_product[0].image)" alt="" />
                 </header>
-                <ul>
-                    <li>
-                        <span v-text="`Наименование: `" />{{
-                            get_product[0].name
-                        }}
-                    </li>
-                    <li>
-                        <span v-text="`Стоимость: `" />{{
-                            get_product[0].price
-                        }}
-                    </li>
-                    <li>
-                        <span v-text="`Номер товара: `" />{{
-                            get_product[0].batch_id
-                        }}
-                    </li>
-                </ul>
-                <button
-                    v-text="`Добавить в корзину`"
-                    @click="
-                        addToCart({
-                            name: get_product[0].name,
-                            price: get_product[0].price,
-                            quantity: 1,
-                            batch_id: get_product[0].batch_id,
-                        })
-                    "
-                />
             </article>
+
+            <ul>
+                <li>
+                    <span v-text="`Наименование : `" />{{ get_product[0].name }}
+                </li>
+                <li>
+                    <span v-text="`Стоимость : `" />{{ get_product[0].price }}
+                    USD
+                </li>
+                <li>
+                    <span v-text="`Номер товара : `" />#{{
+                        get_product[0].batch_id
+                    }}
+                </li>
+                <hr />
+                <li>
+                    <span v-text="`Колличество партии : `" />{{
+                        get_product[0].quantity
+                    }}
+                    Кг
+                </li>
+                <li>
+                    <span v-text="`Производитель : `" />{{
+                        get_product[0].manufacturer
+                    }}
+                </li>
+                <li>
+                    <span v-text="`Страна : `" />{{ get_product[0].country }}
+                </li>
+                <li>
+                    <span v-text="`Минимальная поставка : `" />{{
+                        get_product[0].minimal_order
+                    }}
+                    Кг
+                </li>
+                <li>
+                    <span v-text="`Описание товара : `" />{{
+                        get_product[0].description
+                    }}
+                </li>
+            </ul>
         </div>
+        <button
+            class="button button__filled"
+            v-text="`Добавить в корзину`"
+            @click="
+                addToCart({
+                    name: get_product[0].name,
+                    price: get_product[0].price,
+                    quantity: 1,
+                    batch_id: get_product[0].batch_id,
+                })
+            "
+        />
     </section>
 </template>
 

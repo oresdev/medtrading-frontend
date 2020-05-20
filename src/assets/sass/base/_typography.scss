@@ -4,7 +4,7 @@
  */
 
 body {
-    font: normal 14px / 26px 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+    font: normal 15px / 26px 'Roboto', 'Helvetica Neue', 'Arial', sans-serif !important;
     font-weight: 400;
 }
 
@@ -61,6 +61,7 @@ p {
 }
 
 a {
+    color: inherit;
     outline: none;
     text-decoration: none;
 }

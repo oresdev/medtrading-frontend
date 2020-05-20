@@ -59,7 +59,6 @@
                 />
             </li>
             <li v-if="cart != false" v-on:click="$emit('cart_modal')">
-                ({{ numInCart }})
                 <figure class="icon">
                     <svg width="22" viewBox="0 0 494.67 494.67">
                         <path
@@ -71,13 +70,13 @@
         </ul>
 
         <ul>
-            <searchbar />
-
             <li class="phone">
                 <a href="tel:+79258603573">8 (925) 860-35-73</a>
             </li>
+            <searchbar />
             <li>
                 <button
+                    class="button button__base"
                     v-on:click="$emit('modal')"
                     v-text="`Обратный звонок`"
                 />

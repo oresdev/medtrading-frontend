@@ -55,6 +55,7 @@
             </li>
             <li>
                 <button
+                    class="button button__base"
                     v-on:click="$emit('modal')"
                     v-text="`Обратный звонок`"
                 />

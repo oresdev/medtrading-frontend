@@ -19,8 +19,9 @@
         background-color: #fff;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
 
+        width: 100%;
         max-width: 480px !important;
-        padding: 3em 2em 3em;
+        padding: 2em;
         position: relative;
 
         transition: all 0.3s ease;
@@ -40,7 +41,9 @@
         }
 
         form {
-            margin: 1em 0 2em;
+            border-bottom: 1px solid #ddd;
+            margin: 1em 0 0.8em;
+            padding: 0 0 2em;
 
             input {
                 display: block;

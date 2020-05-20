@@ -1,32 +1,20 @@
-/* roboto-300 - latin_cyrillic */
-@font-face {
-    font-family: 'Roboto';
-    font-weight: 300;
-    font-style: normal;
-    src: local('Roboto Light'), local('Roboto-Light'),
-        url('~@/assets/fonts/Robotolight.woff2') format('woff2'),
-        url('~@/assets/fonts/Robotolight.woff') format('woff'),
-        url('~@/assets/fonts/Robotolight.ttf') format('truetype');
-}
-
-/* roboto-400 - latin_cyrillic */
 @font-face {
     font-family: 'Roboto';
     font-weight: 400;
     font-style: normal;
-    src: local('Roboto'), local('Roboto-Regular'),
-        url('~@/assets/fonts/Roboto.woff2') format('woff2'),
-        url('~@/assets/fonts/Roboto.woff') format('woff'),
-        url('~@/assets/fonts/Roboto.ttf') format('truetype');
-}
-
-/* roboto-500 - latin_cyrillic */
-@font-face {
-    font-family: 'Roboto';
-    font-weight: 500;
-    font-style: normal;
-    src: local('Roboto Medium'), local('Roboto-Medium'),
-        url('~@/assets/fonts/Robotomedium.woff2') format('woff2'),
-        url('~@/assets/fonts/Robotomedium.woff') format('woff'),
-        url('~@/assets/fonts/Robotomedium.ttf') format('truetype');
+    src: url('~@/assets/fonts/0033a2fbc0329740fb86c1cfd134cb94.eot'); /* IE9*/
+    src: url('~@/assets/fonts/0033a2fbc0329740fb86c1cfd134cb94.eot?#iefix')
+            format('embedded-opentype'),
+        /* IE6-IE8 */
+            url('~@/assets/fonts/0033a2fbc0329740fb86c1cfd134cb94.woff2')
+            format('woff2'),
+        /* chrome、firefox */
+            url('~@/assets/fonts/0033a2fbc0329740fb86c1cfd134cb94.woff')
+            format('woff'),
+        /* chrome、firefox */
+            url('~@/assets/fonts/0033a2fbc0329740fb86c1cfd134cb94.ttf')
+            format('truetype'),
+        /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+            url('~@/assets/fonts/0033a2fbc0329740fb86c1cfd134cb94.svg#Roboto')
+            format('svg'); /* iOS 4.1- */
 }

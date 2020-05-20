@@ -1,0 +1,39 @@
+// Buttons
+.button {
+    display: inline-block;
+
+    color: inherit;
+    cursor: pointer;
+    border: 2px solid #182e7e;
+    border-radius: 25px;
+
+    font-family: inherit;
+    font-size: 1rem;
+
+    margin: 1em 0;
+    padding: 0.4rem 1rem 0.5rem 1rem;
+    text-align: center;
+    text-decoration: none;
+    width: max-content;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &__base {
+        background: transparent;
+
+        &:hover {
+            background: #182e7e;
+            color: #ffffff;
+        }
+    }
+
+    &__filled {
+        background: #182e7e;
+        color: #ffffff;
+
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+}

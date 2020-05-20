@@ -1,7 +1,5 @@
 <template>
     <section>
-        <carousel />
-
         <div class="articles">
             <!-- Articles -->
             <article v-for="item in category" :key="item.id">
@@ -9,7 +7,7 @@
                     <img :src="getImgUrl(item.image)" alt="" />
                 </header>
                 <router-link
-                    class="button"
+                    class="button button__filled"
                     :to="`/category/${item.public_name}`"
                     v-text="item.name"
                 />

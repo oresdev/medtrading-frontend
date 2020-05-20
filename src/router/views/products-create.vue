@@ -1,77 +1,81 @@
 <template>
-    <div>
+    <section>
         <h1>Добавить товар</h1>
+
         <form submit.prevent>
-            <input
-                type="text"
-                v-model="form.name"
-                :placeholder="`Наименование`"
-            />
-            <input
-                type="text"
-                v-model="form.description"
-                :placeholder="`Описание товара`"
-            />
-            <input
-                type="text"
-                v-model="form.price"
-                :placeholder="`Стоимость`"
-            />
-            <input
-                type="text"
-                v-model="form.quantity"
-                :placeholder="`Колличество`"
-            />
-            <input
-                type="text"
-                v-model="form.batch_id"
-                :placeholder="`Номер товара`"
-            />
-            <input
-                type="text"
-                v-model="form.category_id"
-                :placeholder="`Категория`"
-            />
-            <input
-                type="text"
-                v-model="form.manufacturer"
-                :placeholder="`Производитель`"
-            />
-            <input type="text" v-model="form.country" :placeholder="`Страна`" />
+            <label for="">Наименование</label>
+            <input type="text" v-model="form.name" />
+
+            <label for="">Описание товара</label>
+            <textarea v-model="form.description" />
+
+            <label for="">Стоимость</label>
+            <input type="text" v-model="form.price" v-filter="'[0-9]'" />
+
+            <label for="">Колличество</label>
+            <input type="text" v-model="form.quantity" v-filter="'[0-9]'" />
+
+            <label for="">Номер товара</label>
+            <input type="text" v-model="form.batch_id" v-filter="'[0-9]'" />
+
+            <label for="">Категория</label>
+            <select v-model="selected">
+                <option disabled value="">Выберите категорию товара</option>
+                <option
+                    v-for="option in category"
+                    v-bind:key="option.name"
+                    v-bind:value="option.public_id"
+                >
+                    {{ option.name }}
+                </option>
+            </select>
+
+            <label for="">Производитель</label>
+            <input type="text" v-model="form.manufacturer" />
+
+            <label for="">Страна</label>
+            <input type="text" v-model="form.country" />
+
+            <label for="">Минимальный заказ</label>
             <input
                 type="text"
                 v-model="form.minimal_order"
-                :placeholder="`Минимальный заказ`"
+                v-filter="'[0-9]'"
             />
-            <input
-                type="text"
-                v-model="form.weight"
-                :placeholder="`Вес партии`"
-            />
-            <textarea
-                name="body"
-                v-model="form.body"
-                cols="30"
-                rows="10"
-            ></textarea>
+
+            <label for="">Вес партии</label>
+            <input type="text" v-model="form.weight" v-filter="'[0-9]'" />
+
+            <label for="">Дополнительная информация о товаре</label>
+            <textarea name="body" v-model="form.body" />
+
             <p
                 v-if="status"
                 :class="[status == 'fail' ? 'error' : 'success', 'message']"
                 v-text="status"
             />
-        </form>
 
-        <div class="card bg-white">
-            <img style="" :src="form.image" alt="" />
-            <input
-                @change="handleImage"
-                class="custom-input"
-                type="file"
-                accept="image/*"
-            />
-        </div>
-        <button type="submit" v-on:click="sendRequest" v-text="`sendRequest`" />
-    </div>
+            <figure v-if="form.image">
+                <img :src="form.image" alt="" />
+            </figure>
+        </form>
+        <input
+            type="file"
+            name="file"
+            id="file"
+            class="inputfile"
+            accept="image/*"
+            @change="handleImage"
+        />
+        <label for="file" class="button button__base">Прикрепить файл</label>
+
+        <button
+            class="button button__filled"
+            type="submit"
+            v-on:click="sendRequest"
+            v-text="`Сохранить изменения`"
+        />
+    </section>
 </template>
 
 <script>
@@ -81,11 +85,12 @@ export default {
     data() {
         return {
             remoteUrl: '',
+            selected: '',
             form: {
                 name: '',
                 public_name: '',
-                description: 'Описание товара',
-                body: 'Дополнительная информация о товаре',
+                description: '',
+                body: '',
                 price: '',
                 quantity: '',
                 batch_id: '',
@@ -101,13 +106,14 @@ export default {
     computed: {
         ...mapGetters({
             status: 'Product/responseStatus',
+            category: 'Category/responseData',
         }),
     },
     methods: {
         ...mapActions('Product', ['create']),
 
         handleImage(e) {
-            const selectedImage = e.target.files[0] // get first file
+            const selectedImage = e.target.files[0]
             this.createBase64Image(selectedImage)
         },
         createBase64Image(fileObject) {

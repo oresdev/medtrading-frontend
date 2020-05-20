@@ -9,25 +9,32 @@
             />
         </header>
 
+        <carousel v-if="routeName('home')" />
         <main>
             <router-view />
-
-            <section class="about">
-                <strong v-text="`MedTrading.org`" />
-                <p v-text="`ООО«ГЛОБАЛЬНЫЕ ЦИФРОВЫЕ ТЕХНОЛОГИИ»`" />
-                <b
-                    v-text="
-                        `На этом сайте предоставлена информация о товарах, необходимых для борьбы с эпидемией коронавируса - тесты на коронавирус, медицинские маски, средства защиты и дезинфекции, аппараты ИВЛ (искуственной вентиляции легких). Их можно купить с помощью заключения стандартного контракта на поставку.`
-                    "
-                />
-            </section>
         </main>
+
+        <section class="about">
+            <strong v-text="`MedTrading.org`" />
+            <p v-text="`ООО«ГЛОБАЛЬНЫЕ ЦИФРОВЫЕ ТЕХНОЛОГИИ»`" />
+            <b
+                v-text="
+                    `На этом сайте предоставлена информация о товарах, необходимых для борьбы с эпидемией коронавируса - тесты на коронавирус, медицинские маски, средства защиты и дезинфекции, аппараты ИВЛ (искуственной вентиляции легких). Их можно купить с помощью заключения стандартного контракта на поставку.`
+                "
+            />
+        </section>
 
         <footer>
             <footer-navbar v-on:modal="modal = true" />
 
             <div class="copyright">
-                <p v-html="$t(`footer.copyright.title`)" />
+                <p>
+                    © 2020 Все права защищены. Интернет-магазин MedTrading.org |
+                    Designed by
+                    <a href="https://stoexport.com/" target="_blank"
+                        >STOExport</a
+                    >
+                </p>
             </div>
         </footer>
 
@@ -37,18 +44,16 @@
             <p>Заполните поля ниже и мы свяжемся с вами в ближайшее время.</p>
 
             <form submit.prevent>
+                <label for="">Ваше имя</label>
                 <input
                     type="text"
                     v-model="caller.name"
-                    :placeholder="`Ваше имя`"
+                    v-filter="'[a-zA-Zа-яА-ЯёЁ]'"
                 />
 
                 <!--  -->
-                <input
-                    type="text"
-                    v-model="caller.phone"
-                    :placeholder="`Номер телефона`"
-                />
+                <label for="">Номер телефона</label>
+                <input type="text" v-model="caller.phone" v-filter="'[0-9]'" />
 
                 <p
                     v-if="callStatus"
@@ -60,6 +65,7 @@
                 />
             </form>
             <button
+                class="button button__filled"
                 type="submit"
                 v-on:click="sendCall"
                 v-text="`Перезвонить`"
@@ -74,18 +80,12 @@
             />
 
             <form submit.prevent>
-                <input
-                    type="email"
-                    v-model="form.email"
-                    :placeholder="`Адрес эл.почты`"
-                />
+                <label for="">Адрес эл.почты</label>
+                <input type="email" v-model="form.email" />
 
                 <!--  -->
-                <input
-                    type="password"
-                    v-model="form.password"
-                    :placeholder="`Пароль`"
-                />
+                <label for="">Пароль</label>
+                <input type="password" v-model="form.password" />
 
                 <p
                     v-if="status"
@@ -104,24 +104,20 @@
             />
 
             <form submit.prevent>
-                <input
-                    type="email"
-                    v-model="form.email"
-                    :placeholder="`Адрес эл.почты`"
-                />
+                <label for="">Адрес эл.почты</label>
+                <input type="email" v-model="form.email" />
 
+                <!--  -->
+                <label for="">Имя пользователя</label>
                 <input
                     type="text"
                     v-model="form.name"
-                    :placeholder="`Имя пользователя`"
+                    v-filter="'[a-zA-Zа-яА-ЯёЁ]'"
                 />
 
                 <!--  -->
-                <input
-                    type="password"
-                    v-model="form.password"
-                    :placeholder="`Пароль`"
-                />
+                <label for="">Пароль</label>
+                <input type="password" v-model="form.password" />
 
                 <p
                     v-if="status"
@@ -147,15 +143,35 @@
                         </td>
                         <td>{{ item.data.price }}</td>
                         <td>{{ item.data.quantity }} шт</td>
-                        <td>
-                            <ul class="rounded">
-                                <li @click="addToCart(item.data)">+</li>
-                                <li @click="removeFromCart(item.data)">-</li>
-                            </ul>
+                        <td style="text-align: center;">
+                            <svg
+                                viewBox="0 0 24 24"
+                                @click="addToCart(item.data)"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path>
+                            </svg>
+                        </td>
+                        <td style="text-align: center;">
+                            <svg
+                                viewBox="0 0 24 24"
+                                @click="removeFromCart(item.data)"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path>
+                            </svg>
                         </td>
                     </tr>
                     <tr>
-                        <td data-label="Итого: ">{{ total }}</td>
+                        <td>ИТОГО: {{ total }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -165,7 +181,8 @@
                     type="text"
                     name="phone"
                     v-model="caller.phone"
-                    placeholder="+7 (___)___-__-__"
+                    v-filter="'[0-9]'"
+                    placeholder="Номер телефона"
                 />
             </div>
             <p
@@ -177,18 +194,19 @@
                 v-text="checkStatus"
             />
             <button
+                class="button button__filled"
                 v-if="session"
                 v-on:click="checkoutCreate"
-                :disabled="caller.phone == ''"
-            >
-                Оформить
-            </button>
+                :disabled="caller.phone.length < 11"
+                v-text="'Оформить заказ'"
+            />
+
             <button
                 v-else
+                class="button button__filled"
                 v-on:click=";(cart_modal = false), (signin_modal = true)"
-            >
-                Войти
-            </button>
+                v-text="'Войти'"
+            />
         </modal>
     </body>
 </template>

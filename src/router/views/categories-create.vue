@@ -1,41 +1,43 @@
 <template>
-    <div>
+    <section>
         <h1>Добавить категорию</h1>
+
         <form submit.prevent>
-            <input
-                type="text"
-                v-model="form.name"
-                :placeholder="`Наименование`"
-            />
-            <input
-                type="text"
-                v-model="form.description"
-                :placeholder="`Описание категории`"
-            />
-            <input
-                type="text"
-                v-model="form.public_id"
-                :placeholder="`Номер категории`"
-            />
+            <label for="">Наименование</label>
+            <input type="text" v-model="form.name" />
+
+            <label for="">Описание категории</label>
+            <textarea v-model="form.description"></textarea>
+
+            <label for="">Номер категории</label>
+            <input type="text" v-model="form.public_id" v-filter="'[0-9]'" />
             <p
                 v-if="status"
                 :class="[status == 'fail' ? 'error' : 'success', 'message']"
                 v-text="status"
             />
+            <figure v-if="form.image">
+                <img :src="form.image" alt="" />
+            </figure>
         </form>
 
-        <div class="card bg-white">
-            <img style="" :src="form.image" alt="" />
-            <input
-                @change="handleImage"
-                class="custom-input"
-                type="file"
-                accept="image/*"
-            />
-        </div>
+        <input
+            type="file"
+            name="file"
+            id="file"
+            class="inputfile"
+            accept="image/*"
+            @change="handleImage"
+        />
+        <label for="file" class="button button__base">Прикрепить файл</label>
 
-        <button type="submit" v-on:click="sendRequest" v-text="`sendRequest`" />
-    </div>
+        <button
+            class="button button__filled"
+            type="submit"
+            v-on:click="sendRequest"
+            v-text="`Сохранить изменения`"
+        />
+    </section>
 </template>
 
 <script>
@@ -48,7 +50,7 @@ export default {
             form: {
                 image: '',
                 name: '',
-                description: 'Описание категории',
+                description: '',
                 public_id: '',
             },
         }
