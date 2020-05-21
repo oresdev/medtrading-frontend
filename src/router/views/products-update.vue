@@ -1,25 +1,25 @@
 <template>
     <section>
-        <h1>Добавить товар</h1>
+        <h1>Изменить товар</h1>
 
-        <form submit.prevent>
+        <form submit.prevent v-if="product">
             <label for="">Наименование</label>
-            <input type="text" v-model="form.name" />
+            <input type="text" v-model="product.name" />
 
             <label for="">Описание товара</label>
-            <textarea v-model="form.description" />
+            <textarea v-model="product.description" />
 
             <label for="">Стоимость</label>
-            <input type="text" v-model="form.price" v-filter="'[0-9]'" />
+            <input type="text" v-model="product.price" v-filter="'[0-9]'" />
 
             <label for="">Колличество</label>
-            <input type="text" v-model="form.quantity" v-filter="'[0-9]'" />
+            <input type="text" v-model="product.quantity" v-filter="'[0-9]'" />
 
             <label for="">Номер товара</label>
-            <input type="text" v-model="form.batch_id" v-filter="'[0-9]'" />
+            <input type="text" v-model="product.batch_id" v-filter="'[0-9]'" />
 
             <label for="">Категория</label>
-            <select v-model="form.category_id">
+            <select v-model="product.category_id">
                 <option disabled value="">Выберите категорию товара</option>
                 <option
                     v-for="option in category"
@@ -31,32 +31,32 @@
             </select>
 
             <label for="">Производитель</label>
-            <input type="text" v-model="form.manufacturer" />
+            <input type="text" v-model="product.manufacturer" />
 
             <label for="">Страна</label>
-            <input type="text" v-model="form.country" />
+            <input type="text" v-model="product.country" />
 
             <label for="">Минимальный заказ</label>
             <input
                 type="text"
-                v-model="form.minimal_order"
+                v-model="product.minimal_order"
                 v-filter="'[0-9]'"
             />
 
             <label for="">Вес партии</label>
-            <input type="text" v-model="form.weight" v-filter="'[0-9]'" />
+            <input type="text" v-model="product.weight" v-filter="'[0-9]'" />
 
             <label for="">Дополнительная информация о товаре</label>
-            <textarea name="body" v-model="form.body" />
+            <textarea name="body" v-model="product.body" />
 
             <p
                 v-if="status"
                 :class="[status == 'fail' ? 'error' : 'success', 'message']"
                 v-text="status"
             />
-
-            <figure v-if="form.image">
-                <img :src="form.image" alt="" />
+            <figure v-if="product.image">
+                <img v-if="upload" :src="getImgUrl(product.image)" alt="" />
+                <img v-else :src="product.image" alt="" />
             </figure>
         </form>
         <input
@@ -84,32 +84,28 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            form: {
-                name: '',
-                public_name: '',
-                description: '',
-                body: '',
-                price: '',
-                quantity: '',
-                batch_id: '',
-                category_id: this.selected,
-                manufacturer: '',
-                country: 'Китай',
-                minimal_order: '',
-                weight: '',
-                image: '',
-            },
+            upload: true,
         }
     },
     computed: {
         ...mapGetters({
             status: 'Product/responseStatus',
             category: 'Category/responseData',
+            productData: 'Product/responseData',
         }),
+        product: self =>
+            self.productData
+                .filter(p => p.batch_id === self.$route.params.id)
+                .first(),
     },
     methods: {
         ...mapActions('Product', ['create']),
 
+        getImgUrl(image) {
+            return '/img/product/' + image
+            // return 'https://medtrading.org/img/product/' + image
+            // return require('@/assets/images/product/' + image)
+        },
         handleImage(e) {
             const selectedImage = e.target.files[0]
             this.createBase64Image(selectedImage)
@@ -117,14 +113,18 @@ export default {
         createBase64Image(fileObject) {
             const reader = new FileReader()
             reader.onload = e => {
-                this.form.image = e.target.result
+                this.product.image = e.target.result
+                this.upload = false
             }
             reader.readAsDataURL(fileObject)
         },
 
         async sendRequest() {
-            await this.create(this.form)
+            await this.create(this.product)
         },
+    },
+    async mounted() {
+        await this.$store.dispatch('Product/getAll')
     },
 }
 </script>

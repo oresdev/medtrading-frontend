@@ -1,53 +1,53 @@
 <template>
-    <section class="wrapper" v-if="get_product[0]">
-        <h1 v-text="get_product[0].name"></h1>
-        <p v-text="get_product[0].description"></p>
+    <section class="wrapper" v-if="product">
+        <h1 v-text="product.name"></h1>
+        <p v-html="product.description"></p>
 
         <div class="articles">
             <!-- Articles -->
             <article>
                 <header>
-                    <img :src="getImgUrl(get_product[0].image)" alt="" />
+                    <img :src="getImgUrl(product.image)" alt="" />
                 </header>
             </article>
 
             <ul>
+                <li><span v-text="`Наименование : `" />{{ product.name }}</li>
                 <li>
-                    <span v-text="`Наименование : `" />{{ get_product[0].name }}
-                </li>
-                <li>
-                    <span v-text="`Стоимость : `" />{{ get_product[0].price }}
+                    <span v-text="`Стоимость : `" />{{ product.price }}
                     USD
                 </li>
                 <li>
-                    <span v-text="`Номер товара : `" />#{{
-                        get_product[0].batch_id
-                    }}
+                    <span v-text="`Номер товара : `" />#{{ product.batch_id }}
                 </li>
                 <hr />
                 <li>
                     <span v-text="`Колличество партии : `" />{{
-                        get_product[0].quantity
+                        product.quantity
                     }}
                     Кг
                 </li>
+                <li><span v-text="`Вес партии : `" />{{ product.weight }}</li>
                 <li>
                     <span v-text="`Производитель : `" />{{
-                        get_product[0].manufacturer
+                        product.manufacturer
                     }}
                 </li>
-                <li>
-                    <span v-text="`Страна : `" />{{ get_product[0].country }}
-                </li>
+                <li><span v-text="`Страна : `" />{{ product.country }}</li>
                 <li>
                     <span v-text="`Минимальная поставка : `" />{{
-                        get_product[0].minimal_order
+                        product.minimal_order
                     }}
                     Кг
                 </li>
                 <li>
-                    <span v-text="`Описание товара : `" />{{
-                        get_product[0].description
+                    <span v-html="`Описание товара : `" />{{
+                        product.description
+                    }}
+                </li>
+                <li>
+                    <span v-html="`Дополнительная информация : `" />{{
+                        product.description
                     }}
                 </li>
             </ul>
@@ -57,10 +57,10 @@
             v-text="`Добавить в корзину`"
             @click="
                 addToCart({
-                    name: get_product[0].name,
-                    price: get_product[0].price,
+                    name: product.name,
+                    price: product.price,
                     quantity: 1,
-                    batch_id: get_product[0].batch_id,
+                    batch_id: product.batch_id,
                 })
             "
         />
@@ -76,11 +76,13 @@ export default {
     },
     computed: {
         ...mapGetters({
-            product: 'Product/responseData',
+            productData: 'Product/responseData',
             cart: 'Product/stock',
         }),
-        get_product: self =>
-            self.product.filter(p => p.public_name === self.$route.params.item),
+        product: self =>
+            self.productData
+                .filter(p => p.public_name === self.$route.params.item)
+                .first(),
     },
     methods: {
         getImgUrl(pic) {

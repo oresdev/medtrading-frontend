@@ -14,8 +14,12 @@
             <tbody>
                 <tr v-for="item in product" :key="item.id">
                     <td>
-                        {{ item.name }}
+                        <router-link
+                            :to="`/cpanel/products/update/${item.batch_id}`"
+                            v-text="item.name"
+                        />
                     </td>
+
                     <td>{{ item.price }}</td>
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.batch_id }}</td>

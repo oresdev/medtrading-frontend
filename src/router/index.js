@@ -19,6 +19,7 @@ import cpanel from './views/cpanel.vue'
 
 import products from './views/products.vue'
 import products_create from './views/products-create.vue'
+import products_update from './views/products-update.vue'
 
 import categories from './views/categories.vue'
 import categories_create from './views/categories-create.vue'
@@ -125,6 +126,15 @@ const router = new VueRouter({
                 {
                     path: '/cpanel/products/create',
                     component: products_create,
+                    meta: {
+                        requiresAuth: true,
+                        adminAuth: true,
+                        residentAuth: false,
+                    },
+                },
+                {
+                    path: '/cpanel/products/update/:id',
+                    component: products_update,
                     meta: {
                         requiresAuth: true,
                         adminAuth: true,
