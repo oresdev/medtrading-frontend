@@ -19,7 +19,7 @@
             <input type="text" v-model="form.batch_id" v-filter="'[0-9]'" />
 
             <label for="">Категория</label>
-            <select v-model="category_id">
+            <select v-model="form.category_id">
                 <option disabled value="">Выберите категорию товара</option>
                 <option
                     v-for="option in category"
@@ -94,7 +94,7 @@ export default {
                 price: '',
                 quantity: '',
                 batch_id: '',
-                category_id: '',
+                category_id: this.selected,
                 manufacturer: '',
                 country: 'Китай',
                 minimal_order: '',
