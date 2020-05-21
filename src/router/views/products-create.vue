@@ -19,7 +19,7 @@
             <input type="text" v-model="form.batch_id" v-filter="'[0-9]'" />
 
             <label for="">Категория</label>
-            <select v-model="selected">
+            <select v-model="category_id">
                 <option disabled value="">Выберите категорию товара</option>
                 <option
                     v-for="option in category"
