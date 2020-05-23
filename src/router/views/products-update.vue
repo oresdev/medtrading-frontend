@@ -7,13 +7,17 @@
             <input type="text" v-model="product.name" />
 
             <label for="">Описание товара</label>
-            <textarea v-model="product.description" />
+            <wysiwyg v-model="product.description" />
 
             <label for="">Стоимость</label>
             <input type="text" v-model="product.price" v-filter="'[0-9]'" />
 
             <label for="">Колличество</label>
-            <input type="text" v-model="product.quantity" v-filter="'[0-9]'" />
+            <input
+                type="text"
+                v-model="product.quantity"
+                placeholder="Например: 1000 Шт/Кг"
+            />
 
             <label for="">Номер товара</label>
             <input type="text" v-model="product.batch_id" v-filter="'[0-9]'" />
@@ -36,18 +40,18 @@
             <label for="">Страна</label>
             <input type="text" v-model="product.country" />
 
-            <label for="">Минимальный заказ</label>
+            <label for="">Минимальная поставка</label>
             <input
                 type="text"
                 v-model="product.minimal_order"
-                v-filter="'[0-9]'"
+                placeholder="Например: 1000 Шт/Кг/Упаковок"
             />
 
             <label for="">Вес партии</label>
             <input type="text" v-model="product.weight" v-filter="'[0-9]'" />
 
             <label for="">Дополнительная информация о товаре</label>
-            <textarea name="body" v-model="product.body" />
+            <wysiwyg v-model="product.body" />
 
             <p
                 v-if="status"

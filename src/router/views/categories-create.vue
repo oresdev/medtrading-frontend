@@ -7,7 +7,7 @@
             <input type="text" v-model="form.name" />
 
             <label for="">Описание категории</label>
-            <textarea v-model="form.description"></textarea>
+            <wysiwyg v-model="form.description" />
 
             <label for="">Номер категории</label>
             <input type="text" v-model="form.public_id" v-filter="'[0-9]'" />

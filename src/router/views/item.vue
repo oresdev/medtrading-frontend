@@ -25,9 +25,10 @@
                     <span v-text="`Колличество партии : `" />{{
                         product.quantity
                     }}
-                    Кг
                 </li>
-                <li><span v-text="`Вес партии : `" />{{ product.weight }}</li>
+                <li>
+                    <span v-text="`Вес партии : `" />{{ product.weight }} Кг
+                </li>
                 <li>
                     <span v-text="`Производитель : `" />{{
                         product.manufacturer
@@ -38,18 +39,11 @@
                     <span v-text="`Минимальная поставка : `" />{{
                         product.minimal_order
                     }}
-                    Кг
                 </li>
                 <li>
-                    <span v-html="`Описание товара : `" />{{
-                        product.description
-                    }}
+                    <span v-html="`Описание товара : `" />
                 </li>
-                <li>
-                    <span v-html="`Дополнительная информация : `" />{{
-                        product.description
-                    }}
-                </li>
+                <li v-html="product.description"></li>
             </ul>
         </div>
         <button
@@ -64,6 +58,8 @@
                 })
             "
         />
+        <h4 v-if="product.body" v-text="`Дополнительная информация : `" />
+        <div v-if="product.body" v-html="product.body" />
     </section>
 </template>
 

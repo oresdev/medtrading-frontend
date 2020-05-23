@@ -48,15 +48,20 @@ const actions = {
     async signout({ commit }) {
         axios.init()
 
-        await axios.post('auth/logout').then(response => {
-            commit('responseStatus', response.data.status)
-            // Remove the token and remove axios header from /common/api
-            state.data = null
+        await axios
+            .post('auth/logout')
+            .then(response => {
+                commit('responseStatus', response.data.status)
+            })
+            .catch(error => {
+                commit('responseStatus', error.data.status)
+            })
+        // Remove the token and remove axios header from /common/api
+        state.data = null
 
-            axios.close()
+        axios.close()
 
-            router.push('/')
-        })
+        router.push('/')
     },
 }
 

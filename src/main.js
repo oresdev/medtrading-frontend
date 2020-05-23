@@ -10,6 +10,10 @@ import store from './store'
 
 import i18n from './locales'
 
+import wysiwyg from 'vue-wysiwyg'
+
+Vue.use(wysiwyg, {}) // config is optional. more below
+
 Vue.config.productionTip = false
 
 Vue.directive('filter', {
