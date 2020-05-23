@@ -17,7 +17,7 @@ import axios from 'axios'
  *    - password
  **/
 
-axios.defaults.baseURL = 'https://api.medtrading.org/v1/'
+axios.defaults.baseURL = 'https://api.medtrading.org/'
 // axios.defaults.baseURL = 'http://127.0.0.1:5000/api/'
 
 export default {
