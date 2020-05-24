@@ -18,7 +18,7 @@ import axios from 'axios'
  **/
 
 axios.defaults.baseURL = 'https://api.medtrading.org/'
-// axios.defaults.baseURL = 'http://127.0.0.1:5000/api/'
+// axios.defaults.baseURL = 'http://127.0.0.1:5000/'
 
 export default {
     init() {
@@ -37,5 +37,7 @@ export default {
 
     post: (endpoint, data) => axios.post(endpoint, data),
 
-    delete: endpoint => axios.delete(endpoint),
+    put: (endpoint, data) => axios.put(endpoint, data),
+
+    delete: (endpoint, data) => axios.delete(endpoint, data),
 }

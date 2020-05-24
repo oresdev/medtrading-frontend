@@ -73,12 +73,26 @@
             <li class="phone">
                 <a href="tel:+79258603573">8 (925) 860-35-73</a>
             </li>
-            <searchbar />
+            <searchbar v-model="search" />
             <li>
                 <button
                     class="button button__base"
                     v-on:click="$emit('modal')"
                     v-text="`Обратный звонок`"
+                />
+            </li>
+        </ul>
+
+        <ul class="search-filter" v-if="search.length > 2">
+            <li v-for="p in filteredList" :key="p.name" @click="search = ''">
+                <router-link
+                    :to="
+                        '/category/' +
+                            get_category(p.category_id).public_name +
+                            '/' +
+                            p.public_name
+                    "
+                    v-text="p.name"
                 />
             </li>
         </ul>
@@ -99,17 +113,25 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
     data() {
-        return {}
+        return {
+            search: '',
+        }
     },
     computed: {
         ...mapGetters({
             data: 'Session/responseData',
             category: 'Category/responseData',
+            productData: 'Product/responseData',
             cart: 'Product/stock',
         }),
         session: self => (self.data ? self.data.user : false),
         numInCart() {
             return this.cart.length
+        },
+        filteredList() {
+            return this.productData.filter(p => {
+                return p.name.toLowerCase().includes(this.search.toLowerCase())
+            })
         },
     },
     methods: {
@@ -117,9 +139,13 @@ export default {
         routeName(...name) {
             return [...name].indexOf(this.$route.name) > -1
         },
+        get_category(id) {
+            return this.category.filter(c => c.public_id == id).first()
+        },
     },
     async mounted() {
         await this.$store.dispatch('Category/getAll')
+        await this.$store.dispatch('Product/getAll')
     },
 }
 </script>

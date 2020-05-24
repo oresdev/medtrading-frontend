@@ -7,7 +7,7 @@
             <input type="text" v-model="product.name" />
 
             <label for="">Описание товара</label>
-            <wysiwyg v-model="product.description" />
+            <ckeditor :editor="editor" v-model="product.description"></ckeditor>
 
             <label for="">Стоимость</label>
             <input type="text" v-model="product.price" v-filter="'[0-9]'" />
@@ -20,7 +20,7 @@
             />
 
             <label for="">Номер товара</label>
-            <input type="text" v-model="product.batch_id" v-filter="'[0-9]'" />
+            <input type="text" v-model="product.batch_id" disabled />
 
             <label for="">Категория</label>
             <select v-model="product.category_id">
@@ -51,7 +51,7 @@
             <input type="text" v-model="product.weight" v-filter="'[0-9]'" />
 
             <label for="">Дополнительная информация о товаре</label>
-            <wysiwyg v-model="product.body" />
+            <ckeditor :editor="editor" v-model="product.body"></ckeditor>
 
             <p
                 v-if="status"
@@ -85,9 +85,12 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+
 export default {
     data() {
         return {
+            editor: ClassicEditor,
             upload: true,
         }
     },
@@ -103,7 +106,7 @@ export default {
                 .first(),
     },
     methods: {
-        ...mapActions('Product', ['create']),
+        ...mapActions('Product', ['update']),
 
         getImgUrl(image) {
             return '/img/product/' + image
@@ -124,7 +127,7 @@ export default {
         },
 
         async sendRequest() {
-            await this.create(this.product)
+            await this.update(this.product)
         },
     },
     async mounted() {

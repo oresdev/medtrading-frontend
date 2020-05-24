@@ -1,7 +1,7 @@
 <template>
-    <section class="wrapper" v-if="get_category[0]">
-        <h1 v-text="get_category[0].name" />
-        <p v-text="get_category[0].description" />
+    <section class="wrapper" v-if="get_category">
+        <h1 v-text="get_category.name" />
+        <p v-html="get_category.description" />
 
         <div class="articles">
             <!-- Articles -->
@@ -22,7 +22,7 @@
                 <router-link
                     class="button button__filled"
                     :to="
-                        `/category/${get_category[0].public_name}/${item.public_name}`
+                        `/category/${get_category.public_name}/${item.public_name}`
                     "
                     v-text="item.name"
                 />
@@ -44,12 +44,12 @@ export default {
             product: 'Product/responseData',
         }),
         get_category: self =>
-            self.category.filter(
-                c => c.public_name === self.$route.params.slug
-            ),
+            self.category
+                .filter(c => c.public_name === self.$route.params.slug)
+                .first(),
         get_product_by_category: self =>
             self.product.filter(
-                p => p.category_id === self.get_category[0].public_id
+                p => p.category_id === self.get_category.public_id
             ),
     },
     methods: {

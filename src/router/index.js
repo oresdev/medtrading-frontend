@@ -23,6 +23,7 @@ import products_update from './views/products-update.vue'
 
 import categories from './views/categories.vue'
 import categories_create from './views/categories-create.vue'
+import categories_update from './views/categories-update.vue'
 
 import users from './views/users.vue'
 import callme from './views/callme.vue'
@@ -153,6 +154,15 @@ const router = new VueRouter({
                 {
                     path: '/cpanel/categories/create',
                     component: categories_create,
+                    meta: {
+                        requiresAuth: true,
+                        adminAuth: true,
+                        residentAuth: false,
+                    },
+                },
+                {
+                    path: '/cpanel/categories/update/:id',
+                    component: categories_update,
                     meta: {
                         requiresAuth: true,
                         adminAuth: true,

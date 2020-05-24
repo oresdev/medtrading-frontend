@@ -10,9 +10,9 @@ import store from './store'
 
 import i18n from './locales'
 
-import wysiwyg from 'vue-wysiwyg'
+import CKEditor from '@ckeditor/ckeditor5-vue'
 
-Vue.use(wysiwyg, {}) // config is optional. more below
+Vue.use(CKEditor)
 
 Vue.config.productionTip = false
 

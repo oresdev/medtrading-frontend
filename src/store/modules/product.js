@@ -50,13 +50,27 @@ const actions = {
             })
     },
 
-    async remove({ commit }, data) {
+    async update({ commit }, data) {
         axios.init()
 
         await axios
-            .post('product/remove/', data)
+            .put('product/' + data.batch_id, data)
             .then(response => {
                 commit('responseStatus', response.data.status)
+            })
+            .catch(error => {
+                commit('responseStatus', error.response.data.status)
+            })
+    },
+
+    async remove({ commit, dispatch }, data) {
+        axios.init()
+
+        await axios
+            .delete('product/' + data.batch_id)
+            .then(response => {
+                commit('responseStatus', response.data.status)
+                dispatch('Product/getAll', null, { root: true })
             })
             .catch(error => {
                 commit('responseStatus', error.response.data.status)

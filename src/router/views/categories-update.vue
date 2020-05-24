@@ -1,24 +1,30 @@
 <template>
     <section>
-        <h1>Добавить категорию</h1>
+        <h1>Изменить категорию</h1>
 
-        <form submit.prevent>
+        <form submit.prevent v-if="category">
             <label for="">Наименование</label>
-            <input type="text" v-model="form.name" />
+            <input type="text" v-model="category.name" />
+
+            <label for="">Номер категории</label>
+            <input type="text" v-model="category.public_id" disabled />
 
             <label for="">Описание категории</label>
-            <ckeditor :editor="editor" v-model="form.description"></ckeditor>
+            <ckeditor
+                :editor="editor"
+                v-model="category.description"
+            ></ckeditor>
 
             <p
                 v-if="status"
                 :class="[status == 'fail' ? 'error' : 'success', 'message']"
                 v-text="status"
             />
-            <figure v-if="form.image">
-                <img :src="form.image" alt="" />
+            <figure v-if="category.image">
+                <img v-if="upload" :src="getImgUrl(category.image)" alt="" />
+                <img v-else :src="category.image" alt="" />
             </figure>
         </form>
-
         <input
             type="file"
             name="file"
@@ -47,37 +53,46 @@ export default {
     data() {
         return {
             editor: ClassicEditor,
-            remoteUrl: '',
-            form: {
-                image: '',
-                name: '',
-                description: '',
-            },
+            upload: true,
         }
     },
     computed: {
         ...mapGetters({
             status: 'Category/responseStatus',
+            categoryData: 'Category/responseData',
         }),
+        category: self =>
+            self.categoryData
+                .filter(p => p.public_id === self.$route.params.id)
+                .first(),
     },
     methods: {
-        ...mapActions('Category', ['create']),
+        ...mapActions('Category', ['update']),
 
+        getImgUrl(image) {
+            return '/img/category/' + image
+            // return 'https://medtrading.org/img/category/' + image
+            // return require('@/assets/images/category/' + image)
+        },
         handleImage(e) {
-            const selectedImage = e.target.files[0] // get first file
+            const selectedImage = e.target.files[0]
             this.createBase64Image(selectedImage)
         },
         createBase64Image(fileObject) {
             const reader = new FileReader()
             reader.onload = e => {
-                this.form.image = e.target.result
+                this.category.image = e.target.result
+                this.upload = false
             }
             reader.readAsDataURL(fileObject)
         },
 
         async sendRequest() {
-            await this.create(this.form)
+            await this.update(this.category)
         },
+    },
+    async mounted() {
+        await this.$store.dispatch('Category/getAll')
     },
 }
 </script>

@@ -7,7 +7,8 @@
             <input type="text" v-model="form.name" />
 
             <label for="">Описание товара</label>
-            <wysiwyg v-model="form.description" />
+
+            <ckeditor :editor="editor" v-model="form.description"></ckeditor>
 
             <label for="">Стоимость</label>
             <input type="text" v-model="form.price" v-filter="'[0-9]'" />
@@ -18,9 +19,6 @@
                 v-model="form.quantity"
                 placeholder="Например: 1000 Шт/Кг"
             />
-
-            <label for="">Номер товара</label>
-            <input type="text" v-model="form.batch_id" v-filter="'[0-9]'" />
 
             <label for="">Категория</label>
             <select v-model="form.category_id">
@@ -51,7 +49,7 @@
             <input type="text" v-model="form.weight" v-filter="'[0-9]'" />
 
             <label for="">Дополнительная информация о товаре</label>
-            <wysiwyg v-model="form.body" />
+            <ckeditor :editor="editor" v-model="form.body"></ckeditor>
 
             <p
                 v-if="status"
@@ -85,9 +83,12 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+
 export default {
     data() {
         return {
+            editor: ClassicEditor,
             form: {
                 name: '',
                 public_name: '',
@@ -95,7 +96,6 @@ export default {
                 body: '',
                 price: '',
                 quantity: '',
-                batch_id: '',
                 category_id: this.selected,
                 manufacturer: '',
                 country: 'Китай',

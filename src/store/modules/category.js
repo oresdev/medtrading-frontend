@@ -35,13 +35,27 @@ const actions = {
             })
     },
 
-    async remove({ commit }, data) {
+    async update({ commit }, data) {
         axios.init()
 
         await axios
-            .post('category/remove/', data)
+            .put('category/' + data.public_id, data)
             .then(response => {
                 commit('responseStatus', response.data.status)
+            })
+            .catch(error => {
+                commit('responseStatus', error.response.data.status)
+            })
+    },
+
+    async remove({ commit, dispatch }, data) {
+        axios.init()
+
+        await axios
+            .delete('category/' + data.public_id)
+            .then(response => {
+                commit('responseStatus', response.data.status)
+                dispatch('Category/getAll', null, { root: true })
             })
             .catch(error => {
                 commit('responseStatus', error.response.data.status)

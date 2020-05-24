@@ -12,7 +12,10 @@
             <tbody>
                 <tr v-for="item in category" :key="item.id">
                     <td>
-                        {{ item.name }}
+                        <router-link
+                            :to="`/cpanel/categories/update/${item.public_id}`"
+                            v-text="item.name"
+                        />
                     </td>
                     <td>{{ item.description }}</td>
                     <td>{{ item.public_id }}</td>
