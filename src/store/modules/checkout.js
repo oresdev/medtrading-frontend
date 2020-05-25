@@ -43,7 +43,7 @@ const actions = {
             email: data.email,
             positions: JSON.parse(localStorage.getItem('cart')),
             total: data.total,
-            description: data.phone,
+            phone: data.phone,
         }
         await axios
             .post('checkout/', checkout)

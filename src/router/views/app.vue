@@ -203,7 +203,7 @@
                 class="button button__filled"
                 v-if="session"
                 v-on:click="checkoutCreate"
-                :disabled="caller.phone.length < 11"
+                :disabled="caller.phone.length < 12"
                 v-text="'Оформить заказ'"
             />
 
@@ -235,7 +235,7 @@ export default {
             },
             caller: {
                 name: '',
-                phone: '',
+                phone: '+7',
             },
         }
     },
