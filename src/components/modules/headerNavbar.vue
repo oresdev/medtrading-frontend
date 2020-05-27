@@ -1,5 +1,5 @@
 <template>
-    <nav>
+    <!-- <nav>
         <ul>
             <li v-if="!routeName('home')">
                 <router-link to="/" v-text="`Главная`" />
@@ -105,7 +105,9 @@
                 />
             </li>
         </ul>
-    </nav>
+    </nav> -->
+
+    <pre>{{ category }}</pre>
 </template>
 
 <script>
