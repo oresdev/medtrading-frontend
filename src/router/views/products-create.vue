@@ -51,16 +51,11 @@
             <label for="">Дополнительная информация о товаре</label>
             <ckeditor :editor="editor" v-model="form.body"></ckeditor>
 
-            <p
-                v-if="status"
-                :class="[status == 'fail' ? 'error' : 'success', 'message']"
-                v-text="status"
-            />
-
             <figure v-if="form.image">
                 <img :src="form.image" alt="" />
             </figure>
         </form>
+
         <input
             type="file"
             name="file"
@@ -73,10 +68,12 @@
 
         <button
             class="button button__filled"
-            type="submit"
             v-on:click="sendRequest"
             v-text="`Сохранить изменения`"
+            v-if="!responseStatus"
         />
+
+        <response-handler />
     </section>
 </template>
 
@@ -90,24 +87,13 @@ export default {
         return {
             editor: ClassicEditor,
             form: {
-                name: '',
-                public_name: '',
-                description: '',
-                body: '',
-                price: '',
-                quantity: '',
-                category_id: this.selected,
-                manufacturer: '',
-                country: 'Китай',
-                minimal_order: '',
-                weight: '',
                 image: '',
             },
         }
     },
     computed: {
         ...mapGetters({
-            status: 'Product/responseStatus',
+            responseStatus: 'responseStatus',
             category: 'Category/responseData',
         }),
     },
@@ -115,8 +101,7 @@ export default {
         ...mapActions('Product', ['create']),
 
         handleImage(e) {
-            const selectedImage = e.target.files[0]
-            this.createBase64Image(selectedImage)
+            this.createBase64Image(e.target.files[0])
         },
         createBase64Image(fileObject) {
             const reader = new FileReader()
@@ -125,9 +110,8 @@ export default {
             }
             reader.readAsDataURL(fileObject)
         },
-
-        async sendRequest() {
-            await this.create(this.form)
+        sendRequest() {
+            this.create(this.form)
         },
     },
 }

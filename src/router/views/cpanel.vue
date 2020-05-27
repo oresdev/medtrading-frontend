@@ -41,7 +41,7 @@
                     </li>
                     <li>
                         <router-link
-                            to="/cpanel/callme"
+                            to="/cpanel/callback"
                             v-text="`Список заявок`"
                         />
                     </li>

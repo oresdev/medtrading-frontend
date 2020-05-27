@@ -39,37 +39,35 @@
         </footer>
 
         <!-- use the modal component, pass in the prop -->
-        <modal v-if="modal" @close="modal = false">
-            <h3><strong>Обратный звонок</strong></h3>
-            <p>Заполните поля ниже и мы свяжемся с вами в ближайшее время.</p>
+        <modal v-if="modal" v-on:close="modal = false">
+            <h3><strong v-text="`Обратный звонок`" /></h3>
+            <p
+                v-text="
+                    `Заполните поля ниже и мы свяжемся с вами в ближайшее время.`
+                "
+            />
 
             <form submit.prevent>
-                <label for="">Ваше имя</label>
+                <label v-text="`Ваше имя`" />
                 <input
                     type="text"
-                    v-model="caller.name"
+                    v-model="form.name"
                     v-filter="'[a-zA-Zа-яА-ЯёЁ]'"
                 />
 
                 <!--  -->
-                <label for="">Номер телефона</label>
-                <input type="text" v-model="caller.phone" v-filter="'[0-9]'" />
-
-                <p
-                    v-if="callStatus"
-                    :class="[
-                        callStatus == 'fail' ? 'error' : 'success',
-                        'message',
-                    ]"
-                    v-text="callStatus"
-                />
+                <label v-text="`Номер телефона`" />
+                <input type="text" v-model="form.phone" v-filter="'[0-9]'" />
             </form>
+
             <button
                 class="button button__filled"
-                type="submit"
-                v-on:click="sendCall"
+                v-on:click="sendCallback"
                 v-text="`Перезвонить`"
+                v-if="!responseStatus"
             />
+
+            <response-handler />
         </modal>
 
         <!-- use the modal component, pass in the prop -->
@@ -80,25 +78,22 @@
             />
 
             <form submit.prevent>
-                <label for="">Адрес эл.почты</label>
+                <label v-text="`Адрес эл.почты`" />
                 <input type="email" v-model="form.email" />
 
                 <!--  -->
-                <label for="">Пароль</label>
+                <label v-text="`Пароль`" />
                 <input type="password" v-model="form.password" />
-
-                <p
-                    v-if="status"
-                    :class="[status == 'fail' ? 'error' : 'success', 'message']"
-                    v-text="status"
-                />
             </form>
+
             <button
                 class="button button__filled"
-                type="submit"
                 v-on:click="sendRequest"
                 v-text="`Войти`"
+                v-if="!responseStatus"
             />
+
+            <response-handler />
         </modal>
 
         <!-- use the modal component, pass in the prop -->
@@ -109,11 +104,11 @@
             />
 
             <form submit.prevent>
-                <label for="">Адрес эл.почты</label>
+                <label v-text="`Адрес эл.почты`" />
                 <input type="email" v-model="form.email" />
 
                 <!--  -->
-                <label for="">Имя пользователя</label>
+                <label v-text="`Имя пользователя`" />
                 <input
                     type="text"
                     v-model="form.name"
@@ -121,21 +116,18 @@
                 />
 
                 <!--  -->
-                <label for="">Пароль</label>
+                <label v-text="`Пароль`" />
                 <input type="password" v-model="form.password" />
-
-                <p
-                    v-if="status"
-                    :class="[status == 'fail' ? 'error' : 'success', 'message']"
-                    v-text="status"
-                />
             </form>
+
             <button
                 class="button button__filled"
-                type="submit"
                 v-on:click="signupUser"
                 v-text="`Подтвердить`"
+                v-if="!responseStatus"
             />
+
+            <response-handler />
         </modal>
 
         <!-- use the modal component, pass in the prop -->
@@ -181,29 +173,23 @@
                     </tr>
                 </tbody>
             </table>
+
             <div class="phone-field" v-if="session">
-                <label for="phone">Контактная информация:</label>
+                <label v-text="`Контактная информация:`" />
                 <input
                     type="text"
                     name="phone"
-                    v-model="caller.phone"
+                    v-model="form.phone"
                     v-filter="'[0-9]'"
                     placeholder="Номер телефона"
                 />
             </div>
-            <p
-                v-if="checkStatus"
-                :class="[
-                    checkStatus == 'fail' ? 'error' : 'success',
-                    'message',
-                ]"
-                v-text="checkStatus"
-            />
+
             <button
                 class="button button__filled"
-                v-if="session"
+                v-if="session && !responseStatus"
                 v-on:click="checkoutCreate"
-                :disabled="caller.phone.length < 12"
+                :disabled="form.phone.length < 12"
                 v-text="'Оформить заказ'"
             />
 
@@ -213,6 +199,8 @@
                 v-on:click=";(cart_modal = false), (signin_modal = true)"
                 v-text="'Войти'"
             />
+
+            <response-handler />
         </modal>
     </body>
 </template>
@@ -232,9 +220,6 @@ export default {
                 email: '',
                 name: '',
                 password: '',
-            },
-            caller: {
-                name: '',
                 phone: '+7',
             },
         }
@@ -248,28 +233,36 @@ export default {
             signin: 'Session/signin',
             signup: 'Session/signup',
             create: 'Checkout/create',
-            callme: 'User/callme',
+            callback: 'User/callback',
         }),
 
         async sendRequest() {
             await this.signin(this.form)
-            this.status == 'success'
+            this.responseStatus.status == 'success'
                 ? setTimeout(() => {
                       this.signin_modal = false
                   }, 3000)
                 : ''
         },
-        async sendCall() {
-            await this.callme(this.caller)
-            this.callStatus == 'success'
+        async sendCallback() {
+            await this.callback({
+                name: this.form.name,
+                phone: this.form.phone,
+            })
+
+            this.responseStatus.status == 'success'
                 ? setTimeout(() => {
                       this.modal = false
                   }, 3000)
                 : ''
         },
         async signupUser() {
-            await this.signup(this.form)
-            this.status == 'success'
+            await this.signup({
+                email: this.form.email,
+                name: this.form.name,
+                password: this.form.password,
+            })
+            this.responseStatus.status == 'success'
                 ? setTimeout(() => {
                       this.signup_modal = false
                   }, 3000)
@@ -279,10 +272,10 @@ export default {
             await this.create({
                 email: this.data.user.email,
                 name: this.data.user.name,
-                phone: this.caller.phone,
+                phone: this.form.phone,
                 total: this.total,
             })
-            this.checkStatus == 'success'
+            this.responseStatus.status == 'success'
                 ? setTimeout(() => {
                       this.cart_modal = false
                       this.$store.commit('Product/responseCart', [])
@@ -290,7 +283,7 @@ export default {
                 : ''
         },
         addToCart(product) {
-            this.$store.dispatch('Product/addToCart', product)
+            this.$store.dispatch('Product/to_cart', product)
         },
 
         removeFromCart(index) {
@@ -301,18 +294,12 @@ export default {
     computed: {
         ...mapGetters({
             data: 'Session/responseData',
-            responseError: 'Session/responseError',
-            responseStatus: 'Session/responseStatus',
+            responseStatus: 'responseStatus',
             cart: 'Product/stock',
-            checkoutStatus: 'Checkout/responseStatus',
             total: 'Product/totalPrice',
-            callStatus: 'User/responseStatus',
         }),
         session: self => (self.data ? self.data.user : false),
-        status: self => (self.responseStatus ? self.responseStatus : false),
-        checkStatus: self =>
-            self.checkoutStatus ? self.checkoutStatus : false,
-        /* snip */
+
         // cart() {
         //     return this.inCart.map(cartItem => {
         //         return this.forSale.find(forSaleItem => {

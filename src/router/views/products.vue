@@ -23,7 +23,9 @@
                     <td>{{ item.price }}</td>
                     <td>{{ item.quantity }}</td>
                     <td>{{ item.batch_id }}</td>
-                    <td>{{ item.category_id }}</td>
+                    <td v-if="get_category">
+                        {{ get_category(item.category_id).name }}
+                    </td>
                     <td style="text-align: center;">
                         <svg
                             viewBox="0 0 24 24"
@@ -40,11 +42,8 @@
                 </tr>
             </tbody>
         </table>
-        <p
-            v-if="status"
-            :class="[status == 'fail' ? 'error' : 'success', 'message']"
-            v-text="status"
-        />
+
+        <response-handler />
     </div>
 </template>
 
@@ -52,23 +51,28 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    data() {
-        return {}
-    },
     computed: {
         ...mapGetters({
             product: 'Product/responseData',
-            status: 'Product/responseStatus',
+            categoryData: 'Category/responseData',
         }),
     },
     methods: {
-        ...mapActions('Product', ['remove']),
-        async removeProduct(batch_id) {
-            await this.remove({ batch_id: batch_id })
+        ...mapActions('Product', ['get_all', 'remove']),
+
+        get_category(id) {
+            return (
+                this.categoryData.filter(c => c.public_id === id).first() ||
+                false
+            )
+        },
+
+        removeProduct(batch_id) {
+            this.remove({ batch_id: batch_id })
         },
     },
-    async mounted() {
-        await this.$store.dispatch('Product/getAll')
+    mounted() {
+        this.get_all()
     },
 }
 </script>

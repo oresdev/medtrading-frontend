@@ -47,20 +47,23 @@ export default {
             self.category
                 .filter(c => c.public_name === self.$route.params.slug)
                 .first(),
+
         get_product_by_category: self =>
             self.product.filter(
                 p => p.category_id === self.get_category.public_id
             ),
     },
     methods: {
+        ...mapActions('Product', ['get_all']),
+
         getImgUrl(pic) {
             return '/img/product/' + pic
             // return 'https://medtrading.org/img/product/' + pic
             // return require('@/assets/images/product/' + pic)
         },
     },
-    async mounted() {
-        await this.$store.dispatch('Product/getAll')
+    mounted() {
+        this.get_all()
     },
 }
 </script>

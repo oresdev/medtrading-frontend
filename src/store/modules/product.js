@@ -6,7 +6,6 @@ const state = {
         ? JSON.parse(window.localStorage.getItem('cart'))
         : [],
     forSale: [],
-    status: '',
 }
 
 const getters = {
@@ -22,18 +21,17 @@ const getters = {
     },
 
     responseData: state => (state.data ? state.data : null),
-    responseStatus: state => (state.status ? state.status : false),
 }
 
 const actions = {
-    async getAll({ commit }) {
+    async get_all({ commit }) {
         await axios
             .get('product/')
             .then(response => {
-                commit('responseData', response.data.data)
+                commit('responseData', response.data)
             })
             .catch(error => {
-                console.log(error)
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 
@@ -43,23 +41,25 @@ const actions = {
         await axios
             .post('product/', data)
             .then(response => {
-                commit('responseStatus', response.data.status)
+                commit('responseStatus', response.data, { root: true })
             })
             .catch(error => {
-                commit('responseStatus', error.response.data.status)
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 
-    async update({ commit }, data) {
+    async update({ commit, dispatch }, data) {
         axios.init()
 
         await axios
             .put('product/' + data.batch_id, data)
             .then(response => {
-                commit('responseStatus', response.data.status)
+                commit('responseStatus', response.data, { root: true })
+
+                dispatch('Product/get_all', null, { root: true }) // refresh
             })
             .catch(error => {
-                commit('responseStatus', error.response.data.status)
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 
@@ -69,16 +69,17 @@ const actions = {
         await axios
             .delete('product/' + data.batch_id)
             .then(response => {
-                commit('responseStatus', response.data.status)
-                dispatch('Product/getAll', null, { root: true })
+                commit('responseStatus', response.data, { root: true })
+
+                dispatch('Product/get_all', null, { root: true }) // refresh
             })
             .catch(error => {
-                commit('responseStatus', error.response.data.status)
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 
-    addToCart(context, product) {
-        context.commit('ADD_TO_CART', product)
+    to_cart(context, item) {
+        context.commit('ADD_TO_CART', item)
     },
     removeFromCart(context, item) {
         context.commit('REMOVE_FROM_CART', item)
@@ -119,13 +120,6 @@ const mutations = {
     },
     responseCart(state, data) {
         state.cart = data
-    },
-
-    responseStatus(state, status) {
-        state.status = status
-        setTimeout(() => {
-            state.status = ''
-        }, 3000)
     },
 }
 

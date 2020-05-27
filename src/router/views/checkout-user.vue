@@ -48,10 +48,9 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    data() {
-        return {}
-    },
     methods: {
+        ...mapActions('Checkout', ['get_one']),
+
         pars(positions) {
             return JSON.parse(positions.replace(/'/gi, '"'))
         },
@@ -61,8 +60,8 @@ export default {
             checkout: 'Checkout/responseData',
         }),
     },
-    async mounted() {
-        await this.$store.dispatch('Checkout/getUserAll')
+    mounted() {
+        this.get_one()
     },
 }
 </script>

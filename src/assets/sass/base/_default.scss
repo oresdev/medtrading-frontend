@@ -29,14 +29,18 @@ main {
 }
 
 .message {
-    margin: 1em 0;
+    text-align: center;
+    padding: 1em 0 0;
+    p {
+        font-size: 1em;
+    }
 
     &.error {
-        color: hsl(0, 100%, 38%);
+        color: #f93e3e;
     }
 
     &.success {
-        color: hsl(120, 100%, 34%);
+        color: #49cc90;
     }
 }
 

@@ -37,17 +37,35 @@
                         {{ item.total }}
                     </td>
                     <td>
-                        {{ item.status }}
+                        {{ item.status == true ? 'Выполнен' : 'В ожидании' }}
                     </td>
                     <td>
-                        {{ item.batch_id }}
+                        <router-link
+                            :to="`/cpanel/checkout/update/${item.batch_id}`"
+                            v-text="item.batch_id"
+                        />
                     </td>
                     <td>
-                        {{ item.description }}
+                        {{ item.phone }}
+                    </td>
+                    <td style="text-align: center;">
+                        <svg
+                            viewBox="0 0 24 24"
+                            @click="removeCheckout(item.batch_id)"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path>
+                        </svg>
                     </td>
                 </tr>
             </tbody>
         </table>
+
+        <response-handler />
     </div>
 </template>
 
@@ -55,23 +73,23 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    data() {
-        return {
-            list: '',
-        }
-    },
-    methods: {
-        pars(positions) {
-            return JSON.parse(positions.replace(/'/gi, '"'))
-        },
-    },
     computed: {
         ...mapGetters({
             checkout: 'Checkout/responseData',
         }),
     },
-    async mounted() {
-        await this.$store.dispatch('Checkout/getAll')
+    methods: {
+        ...mapActions('Checkout', ['get_all', 'remove']),
+
+        removeCheckout(batch_id) {
+            this.remove({ batch_id: batch_id })
+        },
+        pars(positions) {
+            return JSON.parse(positions.replace(/'/gi, '"'))
+        },
+    },
+    mounted() {
+        this.get_all()
     },
 }
 </script>

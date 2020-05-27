@@ -35,11 +35,8 @@
                 </tr>
             </tbody>
         </table>
-        <p
-            v-if="status"
-            :class="[status == 'fail' ? 'error' : 'success', 'message']"
-            v-text="status"
-        />
+
+        <response-handler />
     </div>
 </template>
 
@@ -47,23 +44,20 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    data() {
-        return {}
-    },
     computed: {
         ...mapGetters({
             category: 'Category/responseData',
-            status: 'Category/responseStatus',
         }),
     },
     methods: {
-        ...mapActions('Category', ['remove']),
-        async removeCategory(public_id) {
-            await this.remove({ public_id: public_id })
+        ...mapActions('Category', ['get_all', 'remove']),
+
+        removeCategory(public_id) {
+            this.remove({ public_id: public_id })
         },
     },
-    async mounted() {
-        await this.$store.dispatch('Category/getAll')
+    mounted() {
+        this.get_all()
     },
 }
 </script>

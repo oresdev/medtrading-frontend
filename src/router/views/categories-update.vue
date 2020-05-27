@@ -15,16 +15,12 @@
                 v-model="category.description"
             ></ckeditor>
 
-            <p
-                v-if="status"
-                :class="[status == 'fail' ? 'error' : 'success', 'message']"
-                v-text="status"
-            />
             <figure v-if="category.image">
                 <img v-if="upload" :src="getImgUrl(category.image)" alt="" />
                 <img v-else :src="category.image" alt="" />
             </figure>
         </form>
+
         <input
             type="file"
             name="file"
@@ -40,7 +36,10 @@
             type="submit"
             v-on:click="sendRequest"
             v-text="`Сохранить изменения`"
+            v-if="!responseStatus"
         />
+
+        <response-handler />
     </section>
 </template>
 
@@ -58,7 +57,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            status: 'Category/responseStatus',
+            responseStatus: 'responseStatus',
             categoryData: 'Category/responseData',
         }),
         category: self =>
@@ -75,8 +74,7 @@ export default {
             // return require('@/assets/images/category/' + image)
         },
         handleImage(e) {
-            const selectedImage = e.target.files[0]
-            this.createBase64Image(selectedImage)
+            this.createBase64Image(e.target.files[0])
         },
         createBase64Image(fileObject) {
             const reader = new FileReader()
@@ -86,13 +84,9 @@ export default {
             }
             reader.readAsDataURL(fileObject)
         },
-
-        async sendRequest() {
-            await this.update(this.category)
+        sendRequest() {
+            this.update(this.category)
         },
-    },
-    async mounted() {
-        await this.$store.dispatch('Category/getAll')
     },
 }
 </script>

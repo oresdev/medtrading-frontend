@@ -26,8 +26,11 @@ import categories_create from './views/categories-create.vue'
 import categories_update from './views/categories-update.vue'
 
 import users from './views/users.vue'
-import callme from './views/callme.vue'
+import callback from './views/callback.vue'
+
 import checkout from './views/checkout.vue'
+import checkout_update from './views/checkout-update.vue'
+
 import checkoutUser from './views/checkout-user.vue'
 import _404 from './views/_404.vue'
 
@@ -188,8 +191,17 @@ const router = new VueRouter({
                     },
                 },
                 {
-                    path: '/cpanel/callme',
-                    component: callme,
+                    path: '/cpanel/checkout/update/:id',
+                    component: checkout_update,
+                    meta: {
+                        requiresAuth: true,
+                        adminAuth: true,
+                        residentAuth: false,
+                    },
+                },
+                {
+                    path: '/cpanel/callback',
+                    component: callback,
                     meta: {
                         requiresAuth: true,
                         adminAuth: true,

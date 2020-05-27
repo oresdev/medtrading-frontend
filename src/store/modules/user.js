@@ -2,47 +2,79 @@ import axios from '../../common/api'
 
 const state = {
     data: [],
-    status: '',
 }
 
 const getters = {
     responseData: state => (state.data ? state.data : null),
-    responseStatus: state => (state.status ? state.status : false),
 }
 
 const actions = {
-    async getAll({ commit }) {
+    // user model
+    async get_all({ commit }) {
         axios.init()
+
         await axios
             .get('user/')
             .then(response => {
-                commit('responseData', response.data.data)
+                commit('responseData', response.data)
             })
             .catch(error => {
-                console.log(error)
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 
-    async getCallto({ commit }) {
+    async remove_user({ commit, dispatch }, data) {
         axios.init()
+
         await axios
-            .get('callto/')
+            .delete('user/' + data.public_id)
             .then(response => {
-                commit('responseData', response.data.data)
+                commit('responseStatus', response.data, { root: true })
+
+                dispatch('User/get_all', null, { root: true }) // refresh
             })
             .catch(error => {
-                console.log(error)
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 
-    async callme({ commit }, data) {
+    // callback model
+    async callback({ commit }, data) {
         await axios
-            .post('callto/', data)
+            .post('callback/', data)
             .then(response => {
-                commit('responseStatus', response.data.status)
+                commit('responseStatus', response.data, { root: true })
             })
             .catch(error => {
-                commit('responseStatus', error.response.data.status)
+                commit('responseStatus', error.response.data, { root: true })
+            })
+    },
+
+    async get_callback({ commit }) {
+        axios.init()
+
+        await axios
+            .get('callback/')
+            .then(response => {
+                commit('responseData', response.data)
+            })
+            .catch(error => {
+                commit('responseStatus', error.response.data, { root: true })
+            })
+    },
+
+    async remove_callback({ commit, dispatch }, data) {
+        axios.init()
+
+        await axios
+            .delete('callback/' + data.id)
+            .then(response => {
+                commit('responseStatus', response.data, { root: true })
+
+                dispatch('User/get_callback', null, { root: true }) // refresh
+            })
+            .catch(error => {
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 }
@@ -50,13 +82,6 @@ const actions = {
 const mutations = {
     responseData(state, data) {
         state.data = data
-    },
-
-    responseStatus(state, status) {
-        state.status = status
-        setTimeout(() => {
-            state.status = ''
-        }, 3000)
     },
 }
 

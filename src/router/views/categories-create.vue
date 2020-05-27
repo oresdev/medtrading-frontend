@@ -9,11 +9,6 @@
             <label for="">Описание категории</label>
             <ckeditor :editor="editor" v-model="form.description"></ckeditor>
 
-            <p
-                v-if="status"
-                :class="[status == 'fail' ? 'error' : 'success', 'message']"
-                v-text="status"
-            />
             <figure v-if="form.image">
                 <img :src="form.image" alt="" />
             </figure>
@@ -31,10 +26,12 @@
 
         <button
             class="button button__filled"
-            type="submit"
             v-on:click="sendRequest"
             v-text="`Сохранить изменения`"
+            v-if="!responseStatus"
         />
+
+        <response-handler />
     </section>
 </template>
 
@@ -47,25 +44,21 @@ export default {
     data() {
         return {
             editor: ClassicEditor,
-            remoteUrl: '',
             form: {
                 image: '',
-                name: '',
-                description: '',
             },
         }
     },
     computed: {
         ...mapGetters({
-            status: 'Category/responseStatus',
+            responseStatus: 'responseStatus',
         }),
     },
     methods: {
         ...mapActions('Category', ['create']),
 
         handleImage(e) {
-            const selectedImage = e.target.files[0] // get first file
-            this.createBase64Image(selectedImage)
+            this.createBase64Image(e.target.files[0])
         },
         createBase64Image(fileObject) {
             const reader = new FileReader()
@@ -74,9 +67,8 @@ export default {
             }
             reader.readAsDataURL(fileObject)
         },
-
-        async sendRequest() {
-            await this.create(this.form)
+        sendRequest() {
+            this.create(this.form)
         },
     },
 }

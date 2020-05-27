@@ -3,27 +3,25 @@ import axios from '../../common/api'
 
 const state = {
     data: [],
-    status: '',
 }
 
 const getters = {
     responseData: state => (state.data ? state.data : null),
-    responseStatus: state => (state.status ? state.status : false),
 }
 
 const actions = {
-    async getAll({ commit }) {
+    async get_all({ commit }) {
         axios.init()
         await axios
             .get('checkout/')
             .then(response => {
-                commit('responseData', response.data.data)
+                commit('responseData', response.data)
             })
             .catch(error => {
-                console.log(error)
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
-    async getUserAll({ commit }) {
+    async get_one({ commit }) {
         const email = storage.get('session_data').user.email
         axios.init()
         await axios
@@ -32,7 +30,7 @@ const actions = {
                 commit('responseData', response.data)
             })
             .catch(error => {
-                console.log(error)
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 
@@ -48,11 +46,39 @@ const actions = {
         await axios
             .post('checkout/', checkout)
             .then(response => {
-                commit('responseStatus', response.data.status)
+                commit('responseStatus', response.data, { root: true })
                 localStorage.removeItem('cart')
             })
             .catch(error => {
-                commit('responseStatus', error.response.data.status)
+                commit('responseStatus', error.response.data, { root: true })
+            })
+    },
+
+    async update({ commit }, data) {
+        axios.init()
+
+        await axios
+            .put('checkout/' + data.batch_id, data)
+            .then(response => {
+                commit('responseStatus', response.data, { root: true })
+            })
+            .catch(error => {
+                commit('responseStatus', error.response.data, { root: true })
+            })
+    },
+
+    async remove({ commit, dispatch }, data) {
+        axios.init()
+
+        await axios
+            .delete('checkout/' + data.batch_id)
+            .then(response => {
+                commit('responseStatus', response.data, { root: true })
+
+                dispatch('Checkout/get_all', null, { root: true }) // refresh
+            })
+            .catch(error => {
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 }
@@ -60,13 +86,6 @@ const actions = {
 const mutations = {
     responseData(state, data) {
         state.data = data
-    },
-
-    responseStatus(state, status) {
-        state.status = status
-        setTimeout(() => {
-            state.status = ''
-        }, 3000)
     },
 }
 

@@ -67,9 +67,6 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-    data() {
-        return {}
-    },
     computed: {
         ...mapGetters({
             productData: 'Product/responseData',
@@ -81,17 +78,19 @@ export default {
                 .first(),
     },
     methods: {
+        ...mapActions('Product', ['get_all', 'to_cart']),
+
         getImgUrl(pic) {
             return '/img/product/' + pic
             // return 'https://medtrading.org/img/product/' + pic
             // return require('@/assets/images/product/' + pic)
         },
-        addToCart(product) {
-            this.$store.dispatch('Product/addToCart', product)
+        addToCart(item) {
+            this.to_cart(item)
         },
     },
-    async mounted() {
-        await this.$store.dispatch('Product/getAll')
+    mounted() {
+        this.get_all()
     },
 }
 </script>

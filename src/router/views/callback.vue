@@ -1,24 +1,21 @@
 <template>
     <div>
-        <h1>Список товаров</h1>
+        <h1>Список заявок</h1>
         <table>
             <thead>
                 <tr>
                     <th>Имя пользователя</th>
-                    <th>Адрес эл.почты</th>
+                    <th>Номер телефона</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in users" :key="item.id">
+                <tr v-for="i in users" :key="i.id">
                     <td>
-                        {{ item.name }}
+                        {{ i.name }}
                     </td>
-                    <td>{{ item.email }}</td>
+                    <td>{{ i.phone }}</td>
                     <td style="text-align: center;">
-                        <svg
-                            viewBox="0 0 24 24"
-                            @click="remove(item.public_id)"
-                        >
+                        <svg viewBox="0 0 24 24" @click="remove(i.id)">
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
@@ -45,14 +42,14 @@ export default {
         }),
     },
     methods: {
-        ...mapActions('User', ['get_all', 'remove_user']),
+        ...mapActions('User', ['get_callback', 'remove_callback']),
 
-        remove(public_id) {
-            this.remove_user({ public_id: public_id })
+        remove(id) {
+            this.remove_callback({ id: id })
         },
     },
     mounted() {
-        this.get_all()
+        this.get_callback()
     },
 }
 </script>

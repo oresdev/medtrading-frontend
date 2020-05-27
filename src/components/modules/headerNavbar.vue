@@ -144,8 +144,8 @@ export default {
         },
     },
     async mounted() {
-        await this.$store.dispatch('Category/getAll')
-        await this.$store.dispatch('Product/getAll')
+        await this.$store.dispatch('Category/get_all')
+        await this.$store.dispatch('Product/get_all')
     },
 }
 </script>

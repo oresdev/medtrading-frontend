@@ -53,16 +53,12 @@
             <label for="">Дополнительная информация о товаре</label>
             <ckeditor :editor="editor" v-model="product.body"></ckeditor>
 
-            <p
-                v-if="status"
-                :class="[status == 'fail' ? 'error' : 'success', 'message']"
-                v-text="status"
-            />
             <figure v-if="product.image">
                 <img v-if="upload" :src="getImgUrl(product.image)" alt="" />
                 <img v-else :src="product.image" alt="" />
             </figure>
         </form>
+
         <input
             type="file"
             name="file"
@@ -75,10 +71,12 @@
 
         <button
             class="button button__filled"
-            type="submit"
             v-on:click="sendRequest"
             v-text="`Сохранить изменения`"
+            v-if="!responseStatus"
         />
+
+        <response-handler />
     </section>
 </template>
 
@@ -96,7 +94,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            status: 'Product/responseStatus',
+            responseStatus: 'responseStatus',
             category: 'Category/responseData',
             productData: 'Product/responseData',
         }),
@@ -114,8 +112,7 @@ export default {
             // return require('@/assets/images/product/' + image)
         },
         handleImage(e) {
-            const selectedImage = e.target.files[0]
-            this.createBase64Image(selectedImage)
+            this.createBase64Image(e.target.files[0])
         },
         createBase64Image(fileObject) {
             const reader = new FileReader()
@@ -125,13 +122,9 @@ export default {
             }
             reader.readAsDataURL(fileObject)
         },
-
-        async sendRequest() {
-            await this.update(this.product)
+        sendRequest() {
+            this.update(this.product)
         },
-    },
-    async mounted() {
-        await this.$store.dispatch('Product/getAll')
     },
 }
 </script>

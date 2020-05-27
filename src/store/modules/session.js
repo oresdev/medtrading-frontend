@@ -20,12 +20,13 @@ const actions = {
             .post('auth/login', data)
             .then(response => {
                 commit('responseData', response.data)
-                commit('responseStatus', response.data.status)
+
+                commit('responseStatus', response.data, { root: true })
 
                 axios.init()
             })
             .catch(error => {
-                commit('responseStatus', error.response.data.status)
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 
@@ -33,10 +34,10 @@ const actions = {
         await axios
             .post('user/', data)
             .then(response => {
-                commit('responseStatus', response.data.status)
+                commit('responseStatus', response.data, { root: true })
             })
             .catch(error => {
-                commit('responseStatus', error.response.data.status)
+                commit('responseStatus', error.response.data, { root: true })
             })
     },
 
@@ -51,10 +52,10 @@ const actions = {
         await axios
             .post('auth/logout')
             .then(response => {
-                commit('responseStatus', response.data.status)
+                commit('responseStatus', response.data, { root: true })
             })
             .catch(error => {
-                commit('responseStatus', error.data.status)
+                commit('responseStatus', error.response.data, { root: true })
             })
         // Remove the token and remove axios header from /common/api
         state.data = null
