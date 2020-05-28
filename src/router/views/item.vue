@@ -1,9 +1,6 @@
 <template>
     <section class="wrapper" v-if="product">
-        <h1 v-text="product.name"></h1>
-        <p v-html="product.description"></p>
-
-        <div class="articles">
+        <div class="articles card">
             <!-- Articles -->
             <article>
                 <header>
@@ -19,6 +16,20 @@
                 </li>
                 <li>
                     <span v-text="`Номер товара : `" />#{{ product.batch_id }}
+                </li>
+                <li>
+                    <button
+                        class="button button__filled"
+                        v-text="`Добавить в корзину`"
+                        @click="
+                            addToCart({
+                                name: product.name,
+                                price: product.price,
+                                quantity: 1,
+                                batch_id: product.batch_id,
+                            })
+                        "
+                    />
                 </li>
                 <hr />
                 <li>
@@ -40,26 +51,20 @@
                         product.minimal_order
                     }}
                 </li>
-                <li>
+                <li v-if="product.description">
                     <span v-html="`Описание товара : `" />
                 </li>
-                <li v-html="product.description"></li>
+                <li
+                    v-if="product.description"
+                    v-html="product.description"
+                ></li>
+                <hr v-if="product.body" />
+                <li v-if="product.body">
+                    <span v-html="`Дополнительная информация : `" />
+                </li>
+                <li v-if="product.body" v-html="product.body"></li>
             </ul>
         </div>
-        <button
-            class="button button__filled"
-            v-text="`Добавить в корзину`"
-            @click="
-                addToCart({
-                    name: product.name,
-                    price: product.price,
-                    quantity: 1,
-                    batch_id: product.batch_id,
-                })
-            "
-        />
-        <h4 v-if="product.body" v-text="`Дополнительная информация : `" />
-        <div v-if="product.body" v-html="product.body" />
     </section>
 </template>
 

@@ -42,4 +42,24 @@ article {
     @include breakpoint(tablet) {
         grid-template-columns: 1fr;
     }
+
+    &__price {
+        display: inline-block;
+        font-weight: bold;
+        margin: 1em 0 0.6em;
+    }
+}
+
+.card {
+    grid-template-columns: 1fr 1fr;
+
+    // Breakpoints
+    @include breakpoint(desktop) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    // Breakpoints
+    @include breakpoint(tablet) {
+        grid-template-columns: 1fr;
+    }
 }

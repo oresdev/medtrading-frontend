@@ -9,22 +9,22 @@
                 <header>
                     <img :src="getImgUrl(item.image)" alt="" />
                 </header>
+
                 <ul>
-                    <li><span v-text="`Наименование: `" />{{ item.name }}</li>
+                    <li><span v-text="item.name" /></li>
                     <li>
-                        <span v-text="`Стоимость: `" />{{ item.price }}
+                        <span class="articles__price" v-text="item.price" />
                         USD
                     </li>
-                    <li>
-                        <span v-text="`Номер товара: `" />{{ item.batch_id }}
-                    </li>
                 </ul>
+
                 <router-link
                     class="button button__filled"
+                    tag="button"
                     :to="
                         `/category/${get_category.public_name}/${item.public_name}`
                     "
-                    v-text="item.name"
+                    v-text="`Подробнее`"
                 />
             </article>
         </div>

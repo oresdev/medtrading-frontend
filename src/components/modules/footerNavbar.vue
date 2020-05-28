@@ -5,11 +5,7 @@
             <hr />
             <li><router-link to="/o-kompanii" v-text="`О компании`" /></li>
             <li>
-                <router-link
-                    to="/"
-                    v-text="`Обратная связь`"
-                    v-on:click="$emit('modal')"
-                />
+                <span v-text="`Обратная связь`" v-on:click="$emit('modal')" />
             </li>
             <li><router-link to="/kontakty" v-text="`Контакты`" /></li>
         </ul>
