@@ -131,48 +131,10 @@
         </modal>
 
         <!-- use the modal component, pass in the prop -->
-        <modal v-if="cart_modal && cart != 0" v-on:close="cart_modal = false">
+        <modal v-if="cart_modal" v-on:close="cart_modal = false">
             <h3 v-text="`Корзина`" />
-            <table>
-                <tbody>
-                    <tr v-for="item in cart" :key="item.name">
-                        <td>
-                            {{ item.data.name }}
-                        </td>
-                        <td>{{ item.data.price }}</td>
-                        <td>{{ item.data.quantity }} шт</td>
-                        <td style="text-align: center;">
-                            <svg
-                                viewBox="0 0 24 24"
-                                @click="addToCart(item.data)"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                ></path>
-                            </svg>
-                        </td>
-                        <td style="text-align: center;">
-                            <svg
-                                viewBox="0 0 24 24"
-                                @click="removeFromCart(item.data)"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                ></path>
-                            </svg>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>ИТОГО: {{ total }}</td>
-                    </tr>
-                </tbody>
-            </table>
+
+            <cart />
 
             <div class="phone-field" v-if="session">
                 <label v-text="`Контактная информация:`" />
@@ -211,7 +173,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            cs: JSON.parse(localStorage.getItem('cart')),
+            // cs: JSON.parse(localStorage.getItem('cart')),
             modal: false,
             signin_modal: false,
             signup_modal: false,
@@ -268,8 +230,8 @@ export default {
                   }, 3000)
                 : ''
         },
-        async checkoutCreate() {
-            await this.create({
+        checkoutCreate() {
+            this.create({
                 email: this.data.user.email,
                 name: this.data.user.name,
                 phone: this.form.phone,
@@ -282,31 +244,15 @@ export default {
                   }, 3000)
                 : ''
         },
-        addToCart(product) {
-            this.$store.dispatch('Product/to_cart', product)
-        },
-
-        removeFromCart(index) {
-            this.$store.dispatch('Product/removeFromCart', index)
-        },
     },
 
     computed: {
         ...mapGetters({
             data: 'Session/responseData',
             responseStatus: 'responseStatus',
-            cart: 'Product/stock',
             total: 'Product/totalPrice',
         }),
         session: self => (self.data ? self.data.user : false),
-
-        // cart() {
-        //     return this.inCart.map(cartItem => {
-        //         return this.forSale.find(forSaleItem => {
-        //             return cartItem === forSaleItem.batch_id
-        //         })
-        //     })
-        // },
     },
 }
 </script>

@@ -1,12 +1,94 @@
 .cart {
-    &__item {
-        display: grid;
-        grid-template-columns: 380px 1fr;
-        position: relative;
+    margin: 1em 0;
 
-        img {
-            width: 100%;
-            max-width: 280px;
+    &-item {
+        border-bottom: 1px solid #efefef;
+        border-left: 1px solid #efefef;
+        border-right: 1px solid #efefef;
+        display: grid;
+        grid-template-columns: 1fr 120px 60px 90px;
+
+        @include breakpoint(phone) {
+            grid-template-columns: 1fr;
+            padding-bottom: 10px;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            @include breakpoint(phone) {
+                text-align: center;
+            }
+        }
+
+        &__title {
+            border-right: 1px solid #efefef;
+            padding: 10px;
+
+            @include breakpoint(phone) {
+                border-right: 0;
+            }
+        }
+
+        &__price {
+            border-right: 1px solid #efefef;
+            text-align: center;
+
+            @include breakpoint(phone) {
+                border-right: 0;
+            }
+        }
+
+        &__quant {
+            border-right: 1px solid #efefef;
+            text-align: center;
+
+            @include breakpoint(phone) {
+                border-right: 0;
+            }
+        }
+
+        &__buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &__button {
+            text-align: center;
+            background-color: #efefef;
+            border-radius: 50px;
+
+            cursor: pointer;
+
+            width: 30px;
+            height: 30px;
+            margin: 5px;
+            &:hover {
+                background-color: #dddddd;
+            }
+        }
+
+        &__total {
+            justify-content: flex-start !important;
+            margin: 10px 0 0;
+            padding: 10px;
+            text-transform: uppercase;
+
+            strong {
+                padding: 0 10px 0 0;
+                font-weight: bold;
+            }
+        }
+
+        &:first-child {
+            border-top: 1px solid #efefef;
+        }
+
+        &:last-child {
+            border: none;
         }
     }
 }

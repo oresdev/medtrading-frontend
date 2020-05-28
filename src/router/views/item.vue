@@ -20,7 +20,7 @@
                 <li>
                     <button
                         class="button button__filled"
-                        v-text="`Добавить в корзину`"
+                        v-text="`В корзину`"
                         @click="
                             addToCart({
                                 name: product.name,
