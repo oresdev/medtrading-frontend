@@ -10,9 +10,10 @@
 
             <ul>
                 <li><span v-text="`Наименование : `" />{{ product.name }}</li>
-                <li>
-                    <span v-text="`Стоимость : `" />{{ product.price }}
-                    USD
+                <li v-if="product.price == 0">Цена: договорная</li>
+                <li v-else>
+                    <span v-text="`Цена : `" />{{ product.price }}
+                    ₽
                 </li>
                 <li>
                     <span v-text="`Номер товара : `" />#{{ product.batch_id }}

@@ -5,7 +5,8 @@
                 {{ item.data.name }}
             </li>
             <li class="cart-item__price">
-                <span>{{ item.data.price }} USD</span>
+                <span v-if="item.data.price == 0">--</span>
+                <span v-else>{{ item.data.price }} ₽</span>
             </li>
             <li class="cart-item__quant">
                 <span>{{ item.data.quantity }} шт</span>
@@ -25,7 +26,7 @@
 
         <ul class="cart-item">
             <li class="cart-item__total">
-                <strong>Итого :</strong>{{ total }} USD
+                <strong>Итого :</strong>{{ total }} ₽
             </li>
         </ul>
     </div>

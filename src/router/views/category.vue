@@ -12,9 +12,13 @@
 
                 <ul>
                     <li><span v-text="item.name" /></li>
-                    <li>
+                    <li v-if="item.price == 0">
+                        Цена: договорная <span class="articles__price" />
+                    </li>
+                    <li v-else>
+                        Цена:
                         <span class="articles__price" v-text="item.price" />
-                        USD
+                        ₽
                     </li>
                 </ul>
 
