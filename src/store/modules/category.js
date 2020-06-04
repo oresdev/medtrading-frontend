@@ -41,7 +41,7 @@ const actions = {
             .then(response => {
                 commit('responseStatus', response.data, { root: true })
 
-                dispatch('Category/get_all', null, { root: true }) // refresh
+                // dispatch('Category/get_all', null, { root: true }) // refresh
             })
             .catch(error => {
                 commit('responseStatus', error.response.data, { root: true })

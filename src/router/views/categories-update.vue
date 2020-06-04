@@ -15,9 +15,9 @@
                 v-model="category.description"
             ></ckeditor>
 
-            <figure v-if="category.image">
-                <img v-if="upload" :src="getImgUrl(category.image)" alt="" />
-                <img v-else :src="category.image" alt="" />
+            <figure>
+                <img v-if="upload" :src="category.image" alt="" />
+                <img v-else :src="getImgUrl(category.image)" alt="" />
             </figure>
         </form>
 
@@ -52,7 +52,7 @@ export default {
     data() {
         return {
             editor: ClassicEditor,
-            upload: true,
+            upload: false,
         }
     },
     computed: {
@@ -80,7 +80,7 @@ export default {
             const reader = new FileReader()
             reader.onload = e => {
                 this.category.image = e.target.result
-                this.upload = false
+                this.upload = true
             }
             reader.readAsDataURL(fileObject)
         },
