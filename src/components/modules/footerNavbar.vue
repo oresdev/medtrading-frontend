@@ -47,7 +47,7 @@
         <ul>
             <li style="margin: 1em auto 1em 1em;"></li>
             <li class="phone">
-                <a href="tel:+79258603573">8 (925) 860-35-73</a>
+                <a href="tel:+79258603573">+7 (925) 860-35-73</a>
             </li>
             <li>
                 <button
